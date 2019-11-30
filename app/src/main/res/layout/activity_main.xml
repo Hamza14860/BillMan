@@ -6,18 +6,38 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="300dp"
-        android:layout_margin="50dp"
+    <me.pqpo.smartcropperlib.view.CropImageView
+        android:layout_marginTop="20dp"
+        android:layout_width="300dp"
+        android:layout_height="400dp"
         android:layout_gravity="center"
         android:id="@+id/billimage"
         android:background="#e6e6e6"
         android:padding="4dp"
-        android:scaleType="centerCrop"
         />
 
     <LinearLayout
+        android:layout_gravity="center"
+        android:id="@+id/ll0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Image"
+            android:id="@+id/btnSelect"
+            />
+        <Button
+            android:id="@+id/btnCrop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="crop"
+           />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_width="match_parent"

@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
+import me.pqpo.smartcropperlib.view.CropImageView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     ////////camera variables
     private static final String IMAGE_DIRECTORY = "/YourDirectName";
     private Context mContext;
-    private ImageView billImageView;  // imageview
+    private CropImageView billImageView;  // imageview
     private int GALLERY = 1, CAMERA = 2;
 
     Bitmap billImageBitmap;
@@ -74,6 +75,10 @@ public class MainActivity extends AppCompatActivity {
 
     EditText ipv4AddressView ;
     EditText portNumberView;
+
+
+    Button btnSelect;
+    Button btnCrop;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,18 +87,29 @@ public class MainActivity extends AppCompatActivity {
         ///////////
         ipv4AddressView = findViewById(R.id.IPAddress);
         portNumberView = findViewById(R.id.portNumber);
+        btnSelect=findViewById(R.id.btnSelect);
+        btnCrop=findViewById(R.id.btnCrop);
         //////////
 
 
         //////////
         requestMultiplePermissions();
         billImageView = findViewById(R.id.billimage);
-        billImageView.setOnClickListener(new View.OnClickListener() {
+        btnSelect.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 showPictureDialog();
             }
         });
         ////
+
+        btnCrop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bitmap crop = billImageView.crop();
+                billImageView.setImageBitmap(crop);
+            }
+        });
+
     }
 
 
@@ -237,6 +253,9 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Image Saved G!", Toast.LENGTH_SHORT).show();
                     billImageBitmap=bitmap;////////////////
                     billImageView.setImageBitmap(bitmap);
+
+                    //crop
+                    billImageView.setImageToCrop(bitmap);
 
                 } catch (IOException e) {
                     e.printStackTrace();

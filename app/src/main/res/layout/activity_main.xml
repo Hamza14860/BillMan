@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     tools:context=".MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
 
     <me.pqpo.smartcropperlib.view.CropImageView
+        android:src="@drawable/p11_31"
         android:layout_marginTop="20dp"
         android:layout_width="300dp"
         android:layout_height="400dp"
@@ -91,4 +96,7 @@
         android:text="Message from the Server ..."
         android:id="@+id/responseText" />
 
-</LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

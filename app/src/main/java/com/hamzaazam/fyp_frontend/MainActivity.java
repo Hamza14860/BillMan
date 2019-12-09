@@ -37,6 +37,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import me.pqpo.smartcropperlib.view.CropImageView;
 import okhttp3.Call;
@@ -79,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnSelect;
     Button btnCrop;
+
+    String ocrText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,7 +138,14 @@ public class MainActivity extends AppCompatActivity {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.RGB_565;
         // Read BitMap by file path
-        billImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        if(billImageBitmap==null){
+            Bitmap tempBit = BitmapFactory.decodeResource(this.getResources(),
+                    R.drawable.p11_31);
+            billImageBitmap=tempBit;
+        }
+        else {
+            billImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        }
         byte[] byteArray = stream.toByteArray();
 
         //MultipartBody class, which supports sending multi-part data in the HTTP.
@@ -155,14 +165,19 @@ public class MainActivity extends AppCompatActivity {
 
     void postRequest(String postUrl, RequestBody postBody) {
 
-        OkHttpClient client = new OkHttpClient();
+        ///////////
+        OkHttpClient.Builder b = new OkHttpClient.Builder();
+        b.readTimeout(120000, TimeUnit.MILLISECONDS);
+        b.writeTimeout(15000, TimeUnit.MILLISECONDS);
+
+        OkHttpClient client2 = b.build();
 
         Request request = new Request.Builder()
                 .url(postUrl)
                 .post(postBody)
                 .build();
 
-        client.newCall(request).enqueue(new Callback() {
+        client2.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 // Cancel the post on failure.
@@ -187,7 +202,14 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         TextView responseText = findViewById(R.id.responseText);
                         try {
-                            responseText.setText(response.body().string());
+                            ocrText=response.body().string();
+                            responseText.setText("Ocr Text Received");
+
+                            Intent intent=new Intent(getApplicationContext(),OcrTextDialogActivity.class);
+                            intent.putExtra("ocrtext",ocrText);
+                            startActivity(intent);
+
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -195,7 +217,51 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+
+
+        /////////
+//        OkHttpClient client = new OkHttpClient();
+//
+//        Request request = new Request.Builder()
+//                .url(postUrl)
+//                .post(postBody)
+//                .build();
+//
+//        client.newCall(request).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                // Cancel the post on failure.
+//                Log.e("ERROR CON HAX",e.toString());
+//                call.cancel();
+//
+//                // In order to access the TextView inside the UI thread, the code is executed inside runOnUiThread()
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        TextView responseText = findViewById(R.id.responseText);
+//                        responseText.setText("Failed to Connect to Server");
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, final Response response) throws IOException {
+//                // In order to access the TextView inside the UI thread, the code is executed inside runOnUiThread()
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        TextView responseText = findViewById(R.id.responseText);
+//                        try {
+//                            responseText.setText(response.body().string());
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
+//            }
+//        });
     }
+
 
 
     /////////////////CAMERA & GALLERY METHODS

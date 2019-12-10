@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,11 +32,15 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -81,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
     Button btnSelect;
     Button btnCrop;
 
-    String ocrText;
+    String ocrText;//raw json string with brackets
+    String jsonToString;//will convert json object to string array
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Bitmap crop = billImageView.crop();
                 billImageView.setImageBitmap(crop);
+                billImageBitmap=((BitmapDrawable)billImageView.getDrawable()).getBitmap();
             }
         });
 
@@ -202,15 +209,36 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         TextView responseText = findViewById(R.id.responseText);
                         try {
+
                             ocrText=response.body().string();
+
+                            //String converted to JSON Object
+                            JSONObject jsonText = new JSONObject(ocrText);
+                            Log.d("JSON_TEXT", jsonText.toString());
                             responseText.setText("Ocr Text Received");
 
+                            //Iterating over Json Object and converting it to a String
+                            Iterator<String> iter = jsonText.keys();
+                            jsonToString="";
+                            while (iter.hasNext()) {
+                                String key = iter.next();
+                                try {
+                                    Object value = jsonText.get(key);
+                                    jsonToString+=value.toString();
+                                    jsonToString+="\n --------- \n";
+                                } catch (JSONException e) {
+                                    // Something went wrong!
+                                }
+                            }
+
                             Intent intent=new Intent(getApplicationContext(),OcrTextDialogActivity.class);
-                            intent.putExtra("ocrtext",ocrText);
+                            intent.putExtra("ocrtext",jsonToString);
                             startActivity(intent);
 
 
                         } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }

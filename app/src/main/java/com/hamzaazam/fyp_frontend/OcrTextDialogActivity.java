@@ -15,7 +15,7 @@ public class OcrTextDialogActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_ocr_text_dialog);
-        getWindow().setLayout(1000,1000);
+        getWindow().setLayout(1000,1500);
 
 
         Intent intent=getIntent();

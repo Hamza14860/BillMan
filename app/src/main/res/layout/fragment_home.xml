@@ -7,9 +7,44 @@
     android:background="@drawable/backwall6"
     android:focusableInTouchMode="true"
     >
-    <TextView
+
+
+    <EditText
+        android:drawableRight="@drawable/ic_search_black_24dp"
+        android:padding="10dp"
+        android:elevation="5dp"
+        android:singleLine="true"
+        android:textColorHint="@color/darkgrey_gn"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="5dp"
+        android:hint="Search Categories"
+        android:textSize="15dp"
+        android:id="@+id/searchCategories"
+        android:background="@drawable/sansi_edittext"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="1dp"
+        android:layout_below="@id/searchCategories"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/recyclerViewCategories"/>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:src="@drawable/ic_add_white"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/create_category_button"
+        />
 
 </RelativeLayout>

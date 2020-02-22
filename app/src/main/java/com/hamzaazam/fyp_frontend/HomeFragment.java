@@ -32,6 +32,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.hamzaazam.fyp_frontend.Adapter.CategoryAdapter;
+import com.hamzaazam.fyp_frontend.Model.CategoryM;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +42,12 @@ import java.util.Map;
 
 public class HomeFragment extends Fragment {
 
+    RecyclerView recyclerViewCategoires;
+    CategoryAdapter categoryAdapter;
+    private List<CategoryM> categoryMList;
+    FloatingActionButton createCategoryButton;
+    DatabaseReference reference;
+    EditText search_bar;
 
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
@@ -47,10 +55,136 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_home, container, false);
 
+        createCategoryButton = view.findViewById(R.id.create_category_button);
+        search_bar = view.findViewById(R.id.searchCategories);
 
+        recyclerViewCategoires = view.findViewById(R.id.recyclerViewCategories);
+        recyclerViewCategoires.setHasFixedSize(true);
+        recyclerViewCategoires.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        categoryMList=new ArrayList<>();
+
+
+        //////////////
+
+
+        //Populating Category list
+        final ProgressDialog pDialog = new ProgressDialog(getContext());
+        pDialog.setMessage("Loading Categories");
+        pDialog.show();
+        reference = FirebaseDatabase.getInstance().getReference("Categories");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                categoryMList.clear();
+                for(DataSnapshot category : dataSnapshot.getChildren()){
+                    CategoryM e = category.getValue(CategoryM.class);
+                    e.setCatId(category.getKey());
+                    e.setCatUrl("None Chosen");
+                    categoryMList.add(e);
+                    categoryAdapter.notifyDataSetChanged();
+                    pDialog.hide();
+
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+        categoryAdapter=new CategoryAdapter(getContext(),categoryMList);
+        recyclerViewCategoires.setAdapter(categoryAdapter);
+
+
+        createCategoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), CreateCategoryActivity.class);
+                startActivity(intent);
+            }
+
+        });
+        createCategoryButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                // TODO Auto-generated method stub
+//                toast("Create Category");
+                makeToast(createCategoryButton, "Create Category");
+                return true;
+            }
+        });
+
+        search_bar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                searchCategories(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
+
+        recyclerViewCategoires.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if(event.getAction() == MotionEvent.ACTION_MOVE){
+
+                    // Do what you want
+                    createCategoryButton.hide();
+                }
+                if(event.getAction() == MotionEvent.ACTION_UP){
+
+                    // Do what you want
+                    createCategoryButton.show();
+                }
+                v.onTouchEvent(event);
+                return true;
+            }
+        });
+
+
+        /////////////
         return view;
     }
 
+
+
+    private void searchCategories(String s){
+        final FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+        Query query= FirebaseDatabase.getInstance().getReference("Categories").orderByChild("catName")
+                .startAt(s)
+                .endAt(s+"\uf8ff");
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                categoryMList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    final CategoryM category = snapshot.getValue(CategoryM.class);
+                    assert categoryMList != null;
+                    categoryMList.add(category);
+                }
+                categoryAdapter = new CategoryAdapter(getContext(), categoryMList);
+                recyclerViewCategoires.setAdapter(categoryAdapter);
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
 
 
     public String getURLForResource (int resourceId) {

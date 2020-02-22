@@ -66,5 +66,6 @@ dependencies {
 
     implementation 'com.github.pratikbutani:MultiSelectSpinner:-SNAPSHOT'
 
+    implementation 'com.github.florent37:diagonallayout:1.0.9'
 
 }

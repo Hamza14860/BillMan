@@ -24,44 +24,6 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-<!--            <ImageView-->
-<!--                android:layout_gravity="right"-->
-<!--                android:background="@drawable/ic_settings_white_24dp"-->
-<!--                android:id="@+id/catImageItem"-->
-<!--                android:layout_width="100sp"-->
-<!--                android:layout_height="100sp"-->
-<!--                android:layout_margin="5sp"-->
-<!--                android:layout_marginLeft="3sp"-->
-<!--                android:layout_marginTop="3sp"-->
-<!--                android:src="@drawable/bill1"-->
-
-<!--                />-->
-<!--            <com.github.florent37.diagonallayout.DiagonalLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="100sp"-->
-<!--                android:elevation="5dp"-->
-<!--                app:diagonal_angle="25"-->
-<!--                app:diagonal_position="right"-->
-<!--                app:diagonal_direction="left">-->
-<!--                -->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/catImageItem"-->
-<!--                    android:layout_width="100sp"-->
-<!--                    android:layout_height="100sp"-->
-<!--                    android:src="@drawable/bill1" />-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:id="@+id/catNameItem"-->
-<!--                    android:text="CATEGORY NAME"-->
-<!--                    android:textAlignment="center"-->
-<!--                    android:textSize="22sp"-->
-<!--                    android:layout_marginVertical="30sp"-->
-<!--                    />-->
-
-<!--            </com.github.florent37.diagonallayout.DiagonalLayout>-->
 
             <ImageView
                 android:id="@+id/catImageItem"
@@ -74,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/catNameItem"
                 android:text="CATEGORY NAME"
+                android:textStyle="italic"
                 android:textAlignment="center"
                 android:textSize="22sp"
                 android:layout_marginVertical="30sp"

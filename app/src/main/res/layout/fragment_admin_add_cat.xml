@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragments.AdminAddCatFragment"
+    android:background="@drawable/backwall10">
+
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add OCR Category"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:id="@+id/tvTitle"
+        />
+
+    <ImageView
+        android:layout_below="@id/tvTitle"
+        android:layout_marginTop="20dp"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:src="@drawable/addimage1"
+
+        android:id="@+id/catImage"
+        android:layout_centerHorizontal="true"
+        />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvAdminAdd"
+        android:layout_below="@+id/catImage"
+
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#B9FFFFFF"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="0dp"
+        app:strokeColor="@color/colorPrimaryDark"
+        app:strokeWidth="2dp"
+        >
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        android:layout_marginHorizontal="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Category Name"
+        android:id="@+id/catName"/>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvAdminAdd2"
+        android:layout_below="@+id/cvAdminAdd"
+
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#B9FFFFFF"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="0dp"
+        app:strokeColor="@color/colorPrimaryDark"
+        app:strokeWidth="2dp"
+        >
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_marginTop="10dp"
+            android:textColor="@color/white"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your Admin Code"
+            android:id="@+id/adminCode"/>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Note: Only Admins ca add a new OCR Category"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:id="@+id/tvInfoA"
+        android:layout_below="@id/cvAdminAdd2"
+        />
+
+    <Button
+        android:layout_below="@id/tvInfoA"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnAddCat"
+        android:text="Add"
+        android:textColor="#fff"
+        android:background="@drawable/mybutton"
+        android:backgroundTint="@color/colorPrimaryDark"
+
+        android:layout_marginTop="30dp"
+        />
+
+
+</RelativeLayout>

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,6 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.hamzaazam.fyp_frontend.Adapter.CategoryAdapter;
+import com.hamzaazam.fyp_frontend.Fragments.CreateCategoryFragment;
 import com.hamzaazam.fyp_frontend.Model.CategoryM;
 
 import java.util.ArrayList;
@@ -49,8 +51,8 @@ public class HomeFragment extends Fragment {
     DatabaseReference reference;
     EditText search_bar;
 
-    @SuppressLint("ClickableViewAccessibility")
-    @Nullable
+    ProgressDialog pDialog;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_home, container, false);
@@ -69,7 +71,7 @@ public class HomeFragment extends Fragment {
 
 
         //Populating Category list
-        final ProgressDialog pDialog = new ProgressDialog(getContext());
+        pDialog = new ProgressDialog(getContext());
         pDialog.setMessage("Loading Categories");
         pDialog.show();
         reference = FirebaseDatabase.getInstance().getReference("Categories");
@@ -80,7 +82,7 @@ public class HomeFragment extends Fragment {
                 for(DataSnapshot category : dataSnapshot.getChildren()){
                     CategoryM e = category.getValue(CategoryM.class);
                     e.setCatId(category.getKey());
-                    e.setCatUrl("None Chosen");
+                    //e.setCatUrl("None Chosen");
                     categoryMList.add(e);
                     categoryAdapter.notifyDataSetChanged();
                     pDialog.hide();
@@ -99,8 +101,18 @@ public class HomeFragment extends Fragment {
         createCategoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), CreateCategoryActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getContext(), CreateCategoryActivity.class);
+//                startActivity(intent);
+
+
+                FragmentTransaction ft=getChildFragmentManager().beginTransaction();
+                CreateCategoryFragment ccf=new CreateCategoryFragment();
+                ft.replace(R.id.child_fragment_container,ccf);
+                //ft.addToBackStack(null);
+                ft.commit();
+
+
+
             }
 
         });
@@ -158,6 +170,7 @@ public class HomeFragment extends Fragment {
 
 
 
+
     private void searchCategories(String s){
         final FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         Query query= FirebaseDatabase.getInstance().getReference("Categories").orderByChild("catName")
@@ -203,4 +216,19 @@ public class HomeFragment extends Fragment {
         toast.setGravity(Gravity.TOP|Gravity.LEFT, x, y);
         toast.show();
     }
+
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        pDialog.dismiss();
+    }
 }
+

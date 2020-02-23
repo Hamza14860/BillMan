@@ -22,16 +22,18 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="80dp"
         android:layout_marginRight="7dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:src="@drawable/logo1" />
 
 
     <TextView
+        android:background="#B9FFFFFF"
+        android:paddingHorizontal="5dp"
         android:id="@+id/tvSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="55dp"
         android:layout_below="@id/appLogo"
         android:text="Login"
         android:textColor="@color/colorPrimaryDark"
@@ -90,6 +92,9 @@
                 android:hint="Email"
                 android:background="@drawable/transparent"
                 android:textColor="@color/black"
+
+                android:text="hamzaazam14@gmail.com"
+
                 />
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -134,7 +139,11 @@
                 app:met_floatingLabel="normal"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="20dp"
-                android:hint="Password" />
+                android:hint="Password"
+
+                android:text="123456"
+
+                />
 
 
 
@@ -154,6 +163,8 @@
         />
 
     <TextView
+        android:paddingHorizontal="3dp"
+        android:background="#B9FFFFFF"
         android:layout_marginRight="20dp"
         android:layout_below="@id/btnLogin"
         android:layout_width="wrap_content"

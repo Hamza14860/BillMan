@@ -27,6 +27,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.hamzaazam.fyp_frontend.Fragments.OcrReceiptsFragment;
+import com.hamzaazam.fyp_frontend.Fragments.OtherDocsFragment;
+import com.hamzaazam.fyp_frontend.Fragments.ProfileFragment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -71,7 +74,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
         toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(" Home ");
+        getSupportActionBar().setTitle(" OCR Bill Categories ");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawer = findViewById(R.id.drawer_layout);
         navigationView.setNavigationItemSelectedListener(this);//to keep code clear we passed this, and implemented the method
@@ -112,25 +115,25 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 // update the main content by replacing fragments
                 switch (item.getItemId()) {
                     case R.id.nav_home:
-                        getSupportActionBar().setTitle(" Home ");
+                        getSupportActionBar().setTitle(" OCR Bill Categories ");
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                                 new HomeFragment()).commit();
                         break;
                     case R.id.nav_players:
-                        getSupportActionBar().setTitle(" Players ");
+                        getSupportActionBar().setTitle(" OCR Receipts ");
 
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                new HomeFragment()).commit();
+                                new OcrReceiptsFragment()).commit();
                         break;
                     case R.id.nav_profile:
-                        getSupportActionBar().setTitle(" Profile Dashboard ");
+                        getSupportActionBar().setTitle(" Profile ");
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                new HomeFragment()).commit();
+                                new ProfileFragment()).commit();
                         break;
                     case R.id.nav_events:
-                        getSupportActionBar().setTitle(" My Events ");
+                        getSupportActionBar().setTitle(" Other Docs ");
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                new HomeFragment()).commit();
+                                new OtherDocsFragment()).commit();
                         break;
                     case R.id.nav_help:
                         getSupportActionBar().setTitle(" Help ");
@@ -169,8 +172,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
                         break;
                     case R.id.nav_about:
-                        //Toast.makeText(this, "Devs: Hamza, Wassiullah, Asim", Toast.LENGTH_SHORT).show();
-                        toast("Devs: Hamza, Wasiullah, Asim");
+                        toast("Devs: Hamza, Shariq, Anees");
                         break;
                 }
             }

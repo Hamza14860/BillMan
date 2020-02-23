@@ -16,8 +16,8 @@
         />
     <ImageView
         android:id="@+id/appLogo"
-        android:layout_width="180sp"
-        android:layout_height="180sp"
+        android:layout_width="140sp"
+        android:layout_height="140sp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="80dp"
@@ -37,7 +37,7 @@
         android:layout_below="@id/appLogo"
         android:text="Login"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="25sp"
+        android:textSize="22sp"
         android:textStyle="bold" />
 
     <com.google.android.material.card.MaterialCardView
@@ -73,8 +73,8 @@
 
             <ImageView
                 android:id="@+id/emaillogo"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:src="@drawable/email_logo"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="3dp"
@@ -122,8 +122,8 @@
 
             <ImageView
                 android:id="@+id/passlogo"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:background="@drawable/pass_logo2"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="3dp"
@@ -152,7 +152,7 @@
 
     <Button
         android:layout_below="@id/cvLogin2"
-        android:layout_width="300sp"
+        android:layout_width="250sp"
         android:layout_centerInParent="true"
         android:layout_height="wrap_content"
         android:id="@+id/btnLogin"
@@ -171,6 +171,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Forgot Password?"
+        android:textSize="12sp"
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:textStyle="italic"
@@ -185,7 +186,7 @@
         android:layout_centerHorizontal="true"
         android:text="Dont have an Account?"
         android:textColor="@color/darkgrey_gn"
-        android:textSize="15sp"
+        android:textSize="12sp"
         android:textStyle="bold|italic"
         android:layout_above="@id/registerM"
         />
@@ -198,7 +199,7 @@
         android:layout_centerHorizontal="true"
         android:text="Sign Up"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="20sp"
+        android:textSize="17sp"
         android:textStyle="bold|italic"
         android:layout_marginBottom="40dp"/>
 

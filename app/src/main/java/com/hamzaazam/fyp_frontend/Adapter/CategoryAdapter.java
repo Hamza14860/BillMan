@@ -1,6 +1,10 @@
 package com.hamzaazam.fyp_frontend.Adapter;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentContainer;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,9 +19,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.hamzaazam.fyp_frontend.Fragments.AllBillsFragment;
+import com.hamzaazam.fyp_frontend.Fragments.CreateCategoryFragment;
 import com.hamzaazam.fyp_frontend.Model.CategoryM;
 import com.hamzaazam.fyp_frontend.R;
-import com.hamzaazam.fyp_frontend.SingleCategoryActivity;
 
 import java.util.List;
 
@@ -29,11 +35,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     String catImageurl;
 
+    private Fragment frag;
 
-
-    public CategoryAdapter(Context context, List<CategoryM>  categoriesList){
+    public CategoryAdapter(Context context, List<CategoryM>  categoriesList, Fragment cont){
         this.mContext=context;
         this.mCategories=categoriesList;
+
+        frag=cont;
     }
 
     @NonNull
@@ -63,9 +71,22 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             @Override
             public void onClick(View view) {
 
-                    Intent intent=new Intent(mContext, SingleCategoryActivity.class);
-                    intent.putExtra("categoryid",mCategories.get(position).getCatId());
-                    mContext.startActivity(intent);
+//                FragmentTransaction ft=getChildFragmentManager().beginTransaction();
+//                CreateCategoryFragment ccf=new CreateCategoryFragment();
+//                ft.replace(R.id.child_fragment_container,ccf);
+//                //ft.addToBackStack(null);
+//                ft.commit();
+
+
+                ((AppCompatActivity) mContext).getSupportActionBar().setTitle(category.getCatName()+" OCR Bills");
+
+                ((Fragment) frag).getChildFragmentManager().beginTransaction()
+                        .replace(R.id.child_fragment_container, new AllBillsFragment())
+                        .commit();
+
+//                Intent intent=new Intent(mContext, SingleCategoryActivity.class);
+//                    intent.putExtra("categoryid",mCategories.get(position).getCatId());
+//                    mContext.startActivity(intent);
 
             }
         });

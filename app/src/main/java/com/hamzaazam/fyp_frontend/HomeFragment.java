@@ -53,6 +53,9 @@ public class HomeFragment extends Fragment {
 
     ProgressDialog pDialog;
 
+
+    Fragment currFrag;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_home, container, false);
@@ -94,7 +97,8 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        categoryAdapter=new CategoryAdapter(getContext(),categoryMList);
+       currFrag=getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        categoryAdapter=new CategoryAdapter(getContext(),categoryMList,currFrag);
         recyclerViewCategoires.setAdapter(categoryAdapter);
 
 
@@ -186,7 +190,7 @@ public class HomeFragment extends Fragment {
                     assert categoryMList != null;
                     categoryMList.add(category);
                 }
-                categoryAdapter = new CategoryAdapter(getContext(), categoryMList);
+                categoryAdapter = new CategoryAdapter(getContext(), categoryMList,currFrag);
                 recyclerViewCategoires.setAdapter(categoryAdapter);
             }
 

@@ -44,6 +44,7 @@ import java.util.Map;
 
 public class HomeFragment extends Fragment {
 
+    //OCR BILL CATEOGIRES
     RecyclerView recyclerViewCategoires;
     CategoryAdapter categoryAdapter;
     private List<CategoryM> categoryMList;

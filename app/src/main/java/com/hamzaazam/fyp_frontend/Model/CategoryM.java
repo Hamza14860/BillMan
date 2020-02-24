@@ -5,7 +5,7 @@ public class CategoryM {
     public String catId;
     public String catName;
     public String catUrl;
-    public String userID;
+    public String userID;//User which created this category
 
     public CategoryM(){}
 

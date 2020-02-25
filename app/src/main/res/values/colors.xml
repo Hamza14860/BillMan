@@ -14,4 +14,7 @@
     <color name="Transparent">#00000000</color>
     <color name="sansi_1"> #2e86c1 </color>
     <color name="mdgrey">#EEEEEE</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000</color>
+
 </resources>

@@ -91,7 +91,7 @@
                 app:met_floatingLabel="normal"
                 android:hint="Email"
                 android:background="@drawable/transparent"
-                android:textColor="@color/black"
+                android:textColor="@color/colorPrimaryDark"
 
                 android:text="hamzaazam14@gmail.com"
 

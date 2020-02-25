@@ -4,6 +4,7 @@ package com.hamzaazam.fyp_frontend.Adapter;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.hamzaazam.fyp_frontend.BillViewActivity;
 import com.hamzaazam.fyp_frontend.Model.BillM;
 import com.hamzaazam.fyp_frontend.R;
 
@@ -79,9 +81,9 @@ public class BillsAdapter extends RecyclerView.Adapter<BillsAdapter.BillsViewHol
 //                        .replace(R.id.child_fragment_container, new AllBillsFragment())
 //                        .commit();
 
-//                Intent intent=new Intent(mContext, SingleCategoryActivity.class);
-//                    intent.putExtra("categoryid",mCategories.get(position).getCatId());
-//                    mContext.startActivity(intent);
+                Intent intent=new Intent(mContext, BillViewActivity.class);
+                    intent.putExtra("billid",mBills.get(position).getBillId());
+                    mContext.startActivity(intent);
 
             }
         });

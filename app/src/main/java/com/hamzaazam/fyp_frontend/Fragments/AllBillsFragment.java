@@ -39,6 +39,9 @@ import java.util.List;
 
 public class AllBillsFragment extends Fragment {
 
+    public final static String DATA_RECEIVE = "data_receive";
+    String receivedCategoryName;
+
     RecyclerView recyclerViewBills;
     BillsAdapter billsAdapter;
     private List<BillM> billMList;
@@ -83,12 +86,16 @@ public class AllBillsFragment extends Fragment {
                 billMList.clear();
                 for(DataSnapshot bill : dataSnapshot.getChildren()){
                     BillM e = bill.getValue(BillM.class);
-                    e.setBillId(bill.getKey());
-                    e.setUserID(fuserid);
-                    billMList.add(e);
-                    billsAdapter.notifyDataSetChanged();
-                    pDialog.hide();
+                    //TODO : bill text might have issue when receiving it
+                    //to only show the clicked category bills
+                    if(e.getBillCategory().equals(receivedCategoryName)){
+                        e.setBillId(bill.getKey());
+                        e.setUserID(fuserid);
+                        billMList.add(e);
+                        billsAdapter.notifyDataSetChanged();
 
+                    }
+                    pDialog.hide();
                 }
             }
             @Override
@@ -182,9 +189,14 @@ public class AllBillsFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 billMList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    final BillM category = snapshot.getValue(BillM.class);
+                    final BillM bill = snapshot.getValue(BillM.class);
                     assert billMList != null;
-                    billMList.add(category);
+
+                    //to only show the clicked category bills
+                    if(bill.getBillCategory().equals(receivedCategoryName)){
+                        billMList.add(bill);
+                    }
+
                 }
                 billsAdapter = new BillsAdapter(getContext(), billMList);
                 recyclerViewBills.setAdapter(billsAdapter);
@@ -200,11 +212,6 @@ public class AllBillsFragment extends Fragment {
     }
 
 
-    public String getURLForResource (int resourceId) {
-        //use BuildConfig.APPLICATION_ID instead of R.class.getPackage().getName() if both are not same
-        return Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +resourceId).toString();
-    }
-
     private void toast(String msg){
         Toast.makeText(getActivity(), msg,Toast.LENGTH_LONG).show();
     }
@@ -218,7 +225,20 @@ public class AllBillsFragment extends Fragment {
     }
 
 
-
+    //In this function we receive the type of category which was clicked by the user
+    @Override
+    public void onStart() {
+        super.onStart();
+        Bundle args = getArguments();
+        if (args != null) {
+            receivedCategoryName=args.getString(DATA_RECEIVE);
+            toast( receivedCategoryName+ " Bills");
+        }
+        else{
+            receivedCategoryName="Category Name was NULL";
+            toast("Category Name was NULL");
+        }
+    }
 
     @Override
     public void onDetach() {

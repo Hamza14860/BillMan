@@ -15,8 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CreateCategoryActivity"></activity>
-        <activity android:name=".SingleCategoryActivity" />
+        <activity android:name=".BillViewActivity"></activity>
+
         <activity android:name=".HomePage" />
         <activity android:name=".VerifyEmail" />
         <activity android:name=".ResetPassword" />

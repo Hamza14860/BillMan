@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,8 +81,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
                 ((AppCompatActivity) mContext).getSupportActionBar().setTitle(category.getCatName()+" OCR Bills");
 
+                AllBillsFragment fragmentB = new AllBillsFragment();
+                Bundle args = new Bundle();
+                args.putString(AllBillsFragment.DATA_RECEIVE, mCategories.get(position).getCatName());
+                fragmentB .setArguments(args);
+
                 ((Fragment) frag).getChildFragmentManager().beginTransaction()
-                        .replace(R.id.child_fragment_container, new AllBillsFragment())
+                        .replace(R.id.child_fragment_container, fragmentB)
                         .commit();
 
 //                Intent intent=new Intent(mContext, SingleCategoryActivity.class);

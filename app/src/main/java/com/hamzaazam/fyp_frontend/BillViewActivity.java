@@ -53,7 +53,6 @@ public class BillViewActivity extends AppCompatActivity {
         toast(billId);
 
 
-
         ///////Add View Pager and tab layout..
         TabLayout tabLayout=findViewById(R.id.tabLayoutbill);
         ViewPager viewPager=findViewById(R.id.viewPagerbill);

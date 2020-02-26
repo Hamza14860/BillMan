@@ -3,17 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/backwall2"
     tools:context=".Fragments.BillImageFragment">
 
 
-    <ImageView
+<!--    <ImageView-->
+<!--        android:layout_margin="25dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:id="@+id/billImageView"-->
+<!--        android:src="@drawable/bill1"-->
+
+<!--        />-->
+
+    <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/billImageView"
         android:layout_margin="25dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/billImageView"
-        android:src="@drawable/bill1"
-
-        />
+        android:layout_height="match_parent"/>
 
 </FrameLayout>

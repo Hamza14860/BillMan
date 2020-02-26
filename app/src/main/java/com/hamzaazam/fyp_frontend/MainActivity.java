@@ -69,6 +69,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        forgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Reset password Activity
+                startActivity(new Intent(MainActivity.this, ResetPassword.class));
+            }
+        });
     }
 
     //if users is already logged in

@@ -256,6 +256,7 @@ public class ocrActivity extends AppCompatActivity {
                                 }
                             }
 
+                            isTextExtracted=true;
                             Intent intent=new Intent(getApplicationContext(),OcrTextDialogActivity.class);
                             intent.putExtra("ocrtext",jsonToString);
                             startActivity(intent);

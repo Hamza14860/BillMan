@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
+import com.hamzaazam.fyp_frontend.Fragments.AllBillsFragment;
 import com.hamzaazam.fyp_frontend.Fragments.BillImageFragment;
 import com.hamzaazam.fyp_frontend.Fragments.BillStatsFragment;
 import com.hamzaazam.fyp_frontend.Fragments.BillTextFragment;
@@ -64,6 +65,7 @@ public class BillViewActivity extends AppCompatActivity {
         viewPagerAdapter.addFragment(new BillTextFragment(),"Text");
         viewPagerAdapter.addFragment(new BillStatsFragment(),"Stats");
 
+
         viewPager.setAdapter(viewPagerAdapter);
 
         tabLayout.setupWithViewPager(viewPager);
@@ -93,7 +95,16 @@ public class BillViewActivity extends AppCompatActivity {
         public int getCount() {
             return fragments.size();
         }
+
         public void addFragment(Fragment frag, String title){
+
+            Bundle args = new Bundle();
+            if(title.equals("Image")){args.putString(BillImageFragment.BILLID_RECEIVE, billId);}
+            else if(title.equals("Text")){args.putString(BillTextFragment.BILLID_RECEIVE, billId);}
+            else{args.putString(BillStatsFragment.BILLID_RECEIVE, billId);}
+
+            frag.setArguments(args);
+
             fragments.add(frag);
             titles.add(title);
         }
@@ -112,5 +123,8 @@ public class BillViewActivity extends AppCompatActivity {
     private void toast(String msg){
         Toast.makeText(getApplicationContext(), msg,Toast.LENGTH_LONG).show();
     }
+
+
+
 
 }

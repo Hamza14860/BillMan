@@ -38,8 +38,8 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:src="@drawable/ic_add_white"
+        android:backgroundTint="@color/white"
+        android:src="@drawable/ocrr"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentEnd="true"
@@ -48,6 +48,10 @@
         android:layout_marginRight="10dp"
         android:id="@+id/add_bill_button"
         app:elevation="0dp"
+        android:scaleType="fitXY"
+        app:borderWidth="0dp"
+
+
         />
 
     <FrameLayout

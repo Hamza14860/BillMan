@@ -2,6 +2,7 @@ package com.hamzaazam.fyp_frontend.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -32,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.hamzaazam.fyp_frontend.Adapter.BillsAdapter;
 import com.hamzaazam.fyp_frontend.Model.BillM;
 import com.hamzaazam.fyp_frontend.R;
+import com.hamzaazam.fyp_frontend.ocrActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,27 +112,15 @@ public class AllBillsFragment extends Fragment {
         addBillButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(getContext(), CreateCategoryActivity.class);
-//                startActivity(intent);
-
-
-//                FragmentTransaction ft=getChildFragmentManager().beginTransaction();
-//                CreateCategoryFragment ccf=new CreateCategoryFragment();
-//                ft.replace(R.id.child_fragment_container,ccf);
-//                //ft.addToBackStack(null);
-//                ft.commit();
-
-
-
+                Intent intent = new Intent(getContext(), ocrActivity.class);
+                startActivity(intent);
             }
 
         });
         addBillButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                // TODO Auto-generated method stub
-//                toast("Create Category");
-                makeToast(addBillButton, "Create Category");
+                makeToast(addBillButton, "Extract Text from Bill Image");
                 return true;
             }
         });

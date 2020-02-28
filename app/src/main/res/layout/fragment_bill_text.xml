@@ -79,6 +79,7 @@
                     android:inputType="number"
                     android:id="@+id/billAmount"
                     android:hint="3550.0"
+                    android:textAlignment="center"
                     android:textSize="18sp"
                     android:layout_below="@id/tvBillAmount"
                     android:layout_width="wrap_content"
@@ -116,6 +117,7 @@
                 />
 
             <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_marginLeft="3dp"
                 android:id="@+id/billDate"
                 android:inputType="text"
                 android:textSize="14sp"
@@ -158,6 +160,7 @@
                     />
 
                 <com.rengwuxian.materialedittext.MaterialEditText
+                    android:layout_marginLeft="3dp"
                     android:id="@+id/billCustomerName"
                     android:inputType="text"
                     android:textSize="14sp"
@@ -175,6 +178,7 @@
                     android:textSize="15sp"
                     />
                 <com.rengwuxian.materialedittext.MaterialEditText
+                    android:layout_marginLeft="3dp"
                     android:inputType="text"
                     android:id="@+id/billCustomerAddress"
                     android:hint="House 22, St 17, F8-2, Islamabad"
@@ -190,49 +194,8 @@
 
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cvP4"
-                android:layout_below="@id/cvP3"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="#fff"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="3dp"
-                app:cardPreventCornerOverlap="false"
-                app:cardUseCompatPadding="true"
-                app:contentPadding="5dp"
-                >
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_margin="3dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/tvAddNote"
-                        android:text="NOTE:"
-                        android:textSize="15sp"
-                        />
-
-                    <com.rengwuxian.materialedittext.MaterialEditText
-                        android:maxLines="5"
-                        android:id="@+id/billAddNote"
-                        android:inputType="textMultiLine"
-                        android:textSize="14sp"
-                        android:layout_toRightOf="@id/tvAddNote"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </RelativeLayout>
-
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
                 android:id="@+id/cvP5"
-                android:layout_below="@id/cvP4"
+                android:layout_below="@id/cvP3"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
@@ -289,8 +252,94 @@
 
             </androidx.cardview.widget.CardView>
 
-            <Button
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvP6"
                 android:layout_below="@id/cvP5"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#fff"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="3dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="true"
+                app:contentPadding="5dp"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_margin="3dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvPhoneNo"
+                        android:text="Phone No:"
+                        android:textSize="15sp"
+                        />
+
+                    <com.rengwuxian.materialedittext.MaterialEditText
+                        android:id="@+id/phoneNo"
+                        android:inputType="text"
+                        android:textSize="14sp"
+                        android:layout_toRightOf="@id/tvPhoneNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvP4"
+                android:layout_below="@id/cvP6"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#fff"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="3dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="true"
+                app:contentPadding="5dp"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_margin="3dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvAddNote"
+                        android:text="NOTE:"
+                        android:textSize="15sp"
+                        />
+
+                    <com.rengwuxian.materialedittext.MaterialEditText
+                        android:layout_marginLeft="3dp"
+                        android:maxLines="5"
+                        android:id="@+id/billAddNote"
+                        android:inputType="textMultiLine"
+                        android:textSize="14sp"
+                        android:layout_toRightOf="@id/tvAddNote"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+
+
+
+            <Button
+                android:layout_below="@id/cvP6"
                 android:layout_width="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_height="wrap_content"

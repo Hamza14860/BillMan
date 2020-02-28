@@ -45,6 +45,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import es.dmoral.toasty.Toasty;
 import me.pqpo.smartcropperlib.view.CropImageView;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -77,6 +78,10 @@ public class ocrActivity extends AppCompatActivity {
     String jsonToString;//will convert json object to string array
 
     public Toolbar toolbar;
+
+
+    Button btnSeeText;
+    Boolean isTextExtracted=false;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -125,6 +130,21 @@ public class ocrActivity extends AppCompatActivity {
                 Bitmap crop = billImageView.crop();
                 billImageView.setImageBitmap(crop);
                 billImageBitmap=((BitmapDrawable)billImageView.getDrawable()).getBitmap();
+            }
+        });
+
+        btnSeeText=findViewById(R.id.btnSeeText);
+        btnSeeText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isTextExtracted==true){
+                    Intent intent=new Intent(getApplicationContext(),OcrTextDialogActivity.class);
+                    intent.putExtra("ocrtext",jsonToString);
+                    startActivity(intent);
+                }
+                else{
+                    Toasty.info(getApplicationContext(), "No Extracted Text", Toast.LENGTH_LONG, true).show();
+                }
             }
         });
 

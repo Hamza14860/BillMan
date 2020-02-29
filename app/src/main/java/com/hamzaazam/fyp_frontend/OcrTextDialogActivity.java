@@ -10,6 +10,7 @@ import android.widget.TextView;
 public class OcrTextDialogActivity extends AppCompatActivity {
     String ocrTextString;
     TextView tvOcrText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,4 +26,6 @@ public class OcrTextDialogActivity extends AppCompatActivity {
         tvOcrText.setText(ocrTextString);
 
     }
+
+
 }

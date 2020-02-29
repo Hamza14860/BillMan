@@ -14,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -25,6 +26,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -33,6 +37,7 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,9 +45,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import es.dmoral.toasty.Toasty;
@@ -82,6 +90,10 @@ public class ocrActivity extends AppCompatActivity {
 
     Button btnSeeText;
     Boolean isTextExtracted=false;
+
+
+    WifiManager wifiManager;
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -192,10 +204,10 @@ public class ocrActivity extends AppCompatActivity {
         TextView responseText = findViewById(R.id.responseText);
         responseText.setText("Please wait ...");
 
-        postRequest(postUrl, postBodyImage);
+        postRequest(postUrl, postBodyImage, v);
     }
 
-    void postRequest(String postUrl, RequestBody postBody) {
+    void postRequest(String postUrl, RequestBody postBody, final View v) {
 
         ///////////
         OkHttpClient.Builder b = new OkHttpClient.Builder();
@@ -255,6 +267,48 @@ public class ocrActivity extends AppCompatActivity {
                                     // Something went wrong!
                                 }
                             }
+
+
+                            ////////////////////////////ADDING RECEIVED TEXT TO FIREBASE
+                            //Note: View added in this func para
+
+                            //enabling wifi
+                            wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                            enableWifi(v);
+
+
+                            String fuserid=FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            DatabaseReference reference2= FirebaseDatabase.getInstance().getReference("bills").child(fuserid);
+                            HashMap<String ,Object> map2 =new HashMap<>();
+//                            if(profileAbout.getText()!=null) {
+//                                map2.put("about", profileAbout.getText().toString());
+//                            }
+//                            if(profileAge.getText()!=null && !(profileAge.getText().toString().equals(" ")) &&
+//                                    !(profileAge.getText().toString().equals(""))) {
+//                                map2.put("age", Integer.parseInt(profileAge.getText().toString()));
+//                            }
+//
+//                            if(listArray!=null) {
+//                                map2.put("listSportPreferences", listArray);
+//                            }
+
+                            map2.put("billAddNote", "-");
+                            map2.put("billAmount", "-");
+                            map2.put("billCategory", "-");
+                            map2.put("billCustomerName", "-");
+                            map2.put("billDate", "-");
+                            map2.put("billImageUrl", "None Chosen");
+                            Map<String,Object> jsonMap=toMap(jsonText);
+                            map2.put("billText", jsonMap);
+
+                            reference2.push().setValue(map2);
+
+
+                            Toasty.success(getApplicationContext(), "Bill Added Successfully!", Toast.LENGTH_LONG, true).show();
+
+
+
+                            ////////////////////////////
 
                             isTextExtracted=true;
                             Intent intent=new Intent(getApplicationContext(),OcrTextDialogActivity.class);
@@ -417,6 +471,55 @@ public class ocrActivity extends AppCompatActivity {
                 .onSameThread()
                 .check();
     }
+
+    //Turns on wifi
+    public void enableWifi(View view){
+        wifiManager.setWifiEnabled(true);
+        Toast.makeText(this, "Wifi enabled", Toast.LENGTH_SHORT).show();
+    }
+    //disables wifi
+    public void disableWifi(View view){
+        wifiManager.setWifiEnabled(false);
+        Toast.makeText(this, "Wifi Disabled", Toast.LENGTH_SHORT).show();
+    }
+
+    //converts json obj to map
+    public static Map<String, Object> toMap(JSONObject object) throws JSONException {
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        Iterator<String> keysItr = object.keys();
+        while(keysItr.hasNext()) {
+            String key = keysItr.next();
+            Object value = object.get(key);
+
+            if(value instanceof JSONArray) {
+                value = toList((JSONArray) value);
+            }
+
+            else if(value instanceof JSONObject) {
+                value = toMap((JSONObject) value);
+            }
+            map.put(key, value);
+        }
+        return map;
+    }
+
+    public static List<Object> toList(JSONArray array) throws JSONException {
+        List<Object> list = new ArrayList<Object>();
+        for(int i = 0; i < array.length(); i++) {
+            Object value = array.get(i);
+            if(value instanceof JSONArray) {
+                value = toList((JSONArray) value);
+            }
+
+            else if(value instanceof JSONObject) {
+                value = toMap((JSONObject) value);
+            }
+            list.add(value);
+        }
+        return list;
+    }
+
 
 }
 

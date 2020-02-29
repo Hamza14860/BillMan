@@ -17,7 +17,7 @@ public class BillM {
 
     public String billAddNote;
 
-    HashMap<String,Object> billText;
+    public HashMap<String,Object> billText;
 
 
     public BillM(){}

@@ -335,41 +335,17 @@
             </androidx.cardview.widget.CardView>
 
 
-
-
-            <LinearLayout
-                android:layout_margin="10dp"
-                android:gravity="center_horizontal"
+            <Button
+                android:layout_centerHorizontal="true"
                 android:layout_below="@id/cvP4"
-                android:layout_width="match_parent"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="10">
-                <Button
-                    android:layout_weight="9"
-                    android:layout_width="200dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/btnSaveData"
-                    android:text="Update"
-                    android:textColor="#fff"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/capsule_green"
-                    />
-                <ImageButton
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    android:backgroundTint="@color/Transparent"
-                    android:layout_width="70dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/btnPdf"
-                    android:src="@drawable/converttopdf5"
-                    android:layout_marginTop="8dp"
-                    />
-
-
-            </LinearLayout>
-
-
+                android:id="@+id/btnSaveData"
+                android:text="Update"
+                android:textColor="#fff"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/capsule_green"
+                />
 
 
         </RelativeLayout>

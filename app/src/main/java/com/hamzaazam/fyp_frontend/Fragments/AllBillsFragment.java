@@ -33,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.hamzaazam.fyp_frontend.Adapter.BillsAdapter;
 import com.hamzaazam.fyp_frontend.Model.BillM;
 import com.hamzaazam.fyp_frontend.R;
+import com.hamzaazam.fyp_frontend.ViewStatsActivity;
 import com.hamzaazam.fyp_frontend.ocrActivity;
 
 import java.util.ArrayList;
@@ -48,10 +49,14 @@ public class AllBillsFragment extends Fragment {
     BillsAdapter billsAdapter;
     private List<BillM> billMList;
     FloatingActionButton addBillButton;
+    FloatingActionButton viewStatsButton;
+
     DatabaseReference reference;
     EditText search_bar;
 
     ProgressDialog pDialog;
+
+
 
     String fuserid;//current user logged in
 
@@ -64,6 +69,8 @@ public class AllBillsFragment extends Fragment {
         ////////////
 
         addBillButton = view.findViewById(R.id.add_bill_button);
+        viewStatsButton = view.findViewById(R.id.view_stats_button);
+
         search_bar = view.findViewById(R.id.searchBills);
 
         recyclerViewBills = view.findViewById(R.id.recyclerViewBills);
@@ -108,7 +115,7 @@ public class AllBillsFragment extends Fragment {
         billsAdapter=new BillsAdapter(getContext(),billMList);
         recyclerViewBills.setAdapter(billsAdapter);
 
-
+        //ADD BILL FAB ONCLICK
         addBillButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,6 +128,25 @@ public class AllBillsFragment extends Fragment {
             @Override
             public boolean onLongClick(View v) {
                 makeToast(addBillButton, "Extract Text from Bill Image");
+                return true;
+            }
+        });
+
+
+        //VIEW STATS FAB ONCLICK
+        viewStatsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ViewStatsActivity.class);
+                intent.putExtra("billcat",receivedCategoryName);
+                startActivity(intent);
+            }
+
+        });
+        viewStatsButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                makeToast(viewStatsButton, "View All Bills Stats");
                 return true;
             }
         });

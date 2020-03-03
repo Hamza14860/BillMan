@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backwall2"
+    tools:context=".Fragments.BillExportFragment">
+
+
+    <RelativeLayout
+        android:layout_margin="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:gravity="center_horizontal"
+            android:layout_margin="15dp"
+            android:id="@+id/tvSt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="EXPORT BILL"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            />
+        <Button
+            android:layout_below="@id/tvSt"
+            android:layout_centerHorizontal="true"
+            android:text="Convert Text to PDF"
+            android:textColor="@color/white"
+            android:scaleType="centerCrop"
+            android:backgroundTint="@color/lightred"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:id="@+id/btnPdf"
+            android:drawableLeft="@drawable/converttopdf"
+            android:layout_marginTop="8dp"
+            />
+
+    </RelativeLayout>
+</FrameLayout>

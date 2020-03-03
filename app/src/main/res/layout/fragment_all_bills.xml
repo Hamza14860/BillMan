@@ -54,6 +54,23 @@
 
         />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:backgroundTint="@color/white"
+        android:src="@drawable/statsicon3"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/view_stats_button"
+        app:elevation="0dp"
+        android:scaleType="fitXY"
+        app:borderWidth="0dp"
+
+
+        />
+
     <FrameLayout
         android:id="@+id/child_child_fragment_container"
         android:layout_width="match_parent"

@@ -15,9 +15,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
-import com.hamzaazam.fyp_frontend.Fragments.AllBillsFragment;
 import com.hamzaazam.fyp_frontend.Fragments.BillImageFragment;
-import com.hamzaazam.fyp_frontend.Fragments.BillStatsFragment;
+import com.hamzaazam.fyp_frontend.Fragments.BillExportFragment;
 import com.hamzaazam.fyp_frontend.Fragments.BillTextFragment;
 
 import java.util.ArrayList;
@@ -63,7 +62,7 @@ public class BillViewActivity extends AppCompatActivity {
 
         viewPagerAdapter.addFragment(new BillImageFragment(),"Image");
         viewPagerAdapter.addFragment(new BillTextFragment(),"Text");
-        viewPagerAdapter.addFragment(new BillStatsFragment(),"Stats");
+        viewPagerAdapter.addFragment(new BillExportFragment(),"Export");
 
 
         viewPager.setAdapter(viewPagerAdapter);
@@ -101,7 +100,7 @@ public class BillViewActivity extends AppCompatActivity {
             Bundle args = new Bundle();
             if(title.equals("Image")){args.putString(BillImageFragment.BILLID_RECEIVE, billId);}
             else if(title.equals("Text")){args.putString(BillTextFragment.BILLID_RECEIVE, billId);}
-            else{args.putString(BillStatsFragment.BILLID_RECEIVE, billId);}
+            else{args.putString(BillExportFragment.BILLID_RECEIVE, billId);}
 
             frag.setArguments(args);
 

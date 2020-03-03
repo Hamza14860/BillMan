@@ -1,16 +1,24 @@
 package com.hamzaazam.fyp_frontend.Fragments;
 
 
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +31,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hamzaazam.fyp_frontend.Model.BillM;
 import com.hamzaazam.fyp_frontend.R;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
+
+import es.dmoral.toasty.Toasty;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,6 +67,8 @@ public class BillTextFragment extends Fragment {
     EditText billUnits;
     ///
 
+    Button btnSaveData;
+    ImageButton btnConvertToPDF;
 
 
     public BillTextFragment() {
@@ -78,6 +95,33 @@ public class BillTextFragment extends Fragment {
         billDate=view.findViewById(R.id.billDate);
         billMeterNo=view.findViewById(R.id.billMeterNo);
         billUnits=view.findViewById(R.id.billUnits);
+
+        btnConvertToPDF=view.findViewById(R.id.btnPdf);
+        btnSaveData=view.findViewById(R.id.btnSaveData);
+
+
+        btnSaveData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateInfo();
+            }
+        });
+
+        btnConvertToPDF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveBillTextToPdf();
+            }
+        });
+
+        btnConvertToPDF.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                toast("Save Bill Text as PDF");
+                return true;
+            }
+        });
+
 
         return view;
 
@@ -151,6 +195,99 @@ public class BillTextFragment extends Fragment {
 
 
     }
+
+
+    public void updateInfo(){
+
+        fuserid=FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference reference2=FirebaseDatabase.getInstance().getReference("bills").child(fuserid).child(receivedBillId);
+        HashMap<String ,Object> map2 =new HashMap<>();
+        if(billAddNote.getText()!=null) {
+            map2.put("billAddNote", billAddNote.getText().toString());
+        }
+        if( (billAmount.getText()!=null) && !(billAmount.getText().equals("")) ){
+            map2.put("billAmount",billAmount.getText().toString());
+        }
+
+        if( (billCustomerName.getText()!=null) && !(billCustomerName.getText().equals("")) ){
+            map2.put("billCustomerName",billCustomerName.getText().toString());
+        }
+        if( (billDate.getText()!=null) && !(billDate.getText().equals("")) ){
+            map2.put("billDate",billDate.getText().toString());
+        }
+        if(tvBillTitle.getText().toString().equals("PTCL") || tvBillTitle.getText().toString().contains("Pakistan Telecommunication") )
+        {
+            //TODO
+            //Update other fields in billText Node
+        }
+        else if(tvBillTitle.getText().toString().equals("IESCO") || tvBillTitle.getText().toString().contains("ISLAMABAD") )
+        {
+            //TODO
+            //Update other fields in billText Node
+        }
+        else if(tvBillTitle.getText().toString().equals("SUI GAS") || tvBillTitle.getText().toString().contains("GAS") )
+        {
+            //TODO
+            //Update other fields in billText Node
+        }
+
+        reference2.updateChildren(map2);
+
+
+        Toasty.success(getContext(), "Updated Successfully!", Toast.LENGTH_LONG, true).show();
+
+    }
+
+    public void saveBillTextToPdf(){
+
+
+    }
+
+    //convert text to pdf
+    private void createPdf(String sometext){
+        // create a new document
+        PdfDocument document = new PdfDocument();
+        // crate a page description
+        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(300, 600, 1).create();
+        // start a page
+        PdfDocument.Page page = document.startPage(pageInfo);
+        Canvas canvas = page.getCanvas();
+        Paint paint = new Paint();
+        paint.setColor(Color.RED);
+        canvas.drawCircle(50, 50, 30, paint);
+        paint.setColor(Color.BLACK);
+        canvas.drawText(sometext, 80, 50, paint);
+        //canvas.drawt
+        // finish the page
+        document.finishPage(page);
+// draw text on the graphics object of the page
+        // Create Page 2
+        pageInfo = new PdfDocument.PageInfo.Builder(300, 600, 2).create();
+        page = document.startPage(pageInfo);
+        canvas = page.getCanvas();
+        paint = new Paint();
+        paint.setColor(Color.BLUE);
+        canvas.drawCircle(100, 100, 100, paint);
+        document.finishPage(page);
+        // write the document content
+        String directory_path = Environment.getExternalStorageDirectory().getPath() + "/mypdf/";
+        File file = new File(directory_path);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        String targetPdf = directory_path+"test-2.pdf";
+        File filePath = new File(targetPdf);
+        try {
+            document.writeTo(new FileOutputStream(filePath));
+            toast("PDF MADE");
+        } catch (IOException e) {
+            Log.e("main", "error "+e.toString());
+            toast("ERROR IN CONVERITNG"+e.toString());
+        }
+        // close the document
+        document.close();
+    }
+
 
     private void toast(String msg){
         Toast.makeText(getActivity(), msg,Toast.LENGTH_LONG).show();

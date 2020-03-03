@@ -337,18 +337,39 @@
 
 
 
-
-            <Button
-                android:layout_below="@id/cvP6"
-                android:layout_width="wrap_content"
-                android:layout_centerInParent="true"
+            <LinearLayout
+                android:layout_margin="10dp"
+                android:gravity="center_horizontal"
+                android:layout_below="@id/cvP4"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/btnSaveData"
-                android:text="Save"
-                android:textColor="#fff"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/capsule_green"
-                />
+                android:orientation="horizontal"
+                android:weightSum="10">
+                <Button
+                    android:layout_weight="9"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/btnSaveData"
+                    android:text="Update"
+                    android:textColor="#fff"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/capsule_green"
+                    />
+                <ImageButton
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:backgroundTint="@color/Transparent"
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/btnPdf"
+                    android:src="@drawable/converttopdf5"
+                    android:layout_marginTop="8dp"
+                    />
+
+
+            </LinearLayout>
+
+
 
 
         </RelativeLayout>

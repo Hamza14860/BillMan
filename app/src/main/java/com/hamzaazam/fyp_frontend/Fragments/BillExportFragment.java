@@ -1,6 +1,7 @@
 package com.hamzaazam.fyp_frontend.Fragments;
 
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -33,7 +34,8 @@ public class BillExportFragment extends Fragment {
     String receivedBillId;
 
     Button btnConvertToPDF;
-
+    Button btnShareToWhatsapp;
+    Button btnShareText;
 
 
     public BillExportFragment() {
@@ -48,6 +50,8 @@ public class BillExportFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_bill_export, container, false);
 
         btnConvertToPDF=view.findViewById(R.id.btnPdf);
+        btnShareToWhatsapp=view.findViewById(R.id.btnWhatsapp);
+        btnShareText=view.findViewById(R.id.btnShareText);
 
 
 
@@ -63,6 +67,37 @@ public class BillExportFragment extends Fragment {
             public boolean onLongClick(View view) {
                 toast("Save Bill Text as PDF");
                 return true;
+            }
+        });
+
+        btnShareToWhatsapp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO: TEXT SHARE1
+                Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
+                whatsappIntent.setType("text/plain");
+                whatsappIntent.setPackage("com.whatsapp");
+                whatsappIntent.putExtra(Intent.EXTRA_TEXT, "The text you wanted to share");
+                try {
+                    startActivity(whatsappIntent);
+                } catch (android.content.ActivityNotFoundException ex) {
+                   toast("Whatsapp has not been installed.");
+                }
+
+            }
+        });
+
+        btnShareText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ///
+                //TODO: TEXT SHARE2
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+                ///
             }
         });
 

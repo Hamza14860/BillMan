@@ -18,5 +18,7 @@
     <color name="black">#000</color>
     <color name="lightred">#FF4848</color>
 
+    <color name="green">#008000</color>
+
 
 </resources>

@@ -30,9 +30,37 @@
             android:scaleType="centerCrop"
             android:backgroundTint="@color/lightred"
             android:layout_width="300dp"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:id="@+id/btnPdf"
             android:drawableLeft="@drawable/converttopdf"
+            android:layout_marginTop="8dp"
+            />
+
+        <Button
+            android:layout_below="@id/btnPdf"
+            android:layout_centerHorizontal="true"
+            android:text="Share Text to Whatsapp"
+            android:textColor="@color/white"
+            android:scaleType="centerCrop"
+            android:backgroundTint="@color/green"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:id="@+id/btnWhatsapp"
+
+            android:drawableLeft="@drawable/whatsappicon"
+            android:layout_marginTop="8dp"
+            />
+        <Button
+            android:layout_below="@id/btnWhatsapp"
+            android:layout_centerHorizontal="true"
+            android:text="Share Text"
+            android:textColor="@color/white"
+            android:scaleType="centerCrop"
+            android:backgroundTint="@color/darkgrey_gn"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:drawableLeft="@drawable/ic_share_white_24dp"
+            android:id="@+id/btnShareText"
             android:layout_marginTop="8dp"
             />
 

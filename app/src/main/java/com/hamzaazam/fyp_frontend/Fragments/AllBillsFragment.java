@@ -121,6 +121,8 @@ public class AllBillsFragment extends Fragment {
         billsAdapter=new BillsAdapter(getContext(),billMList);
         recyclerViewBills.setAdapter(billsAdapter);
 
+
+
         //ADD BILL FAB ONCLICK
         addBillButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,6 +132,9 @@ public class AllBillsFragment extends Fragment {
             }
 
         });
+
+
+
         addBillButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {

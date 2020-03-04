@@ -77,6 +77,7 @@ public class HomeFragment extends Fragment {
         //Populating Category list
         pDialog = new ProgressDialog(getContext());
         pDialog.setMessage("Loading Categories");
+        pDialog.setCancelable(false);
         pDialog.show();
         reference = FirebaseDatabase.getInstance().getReference("Categories");
         reference.addValueEventListener(new ValueEventListener() {

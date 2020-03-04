@@ -1,28 +1,20 @@
 package com.hamzaazam.fyp_frontend.Fragments;
 
 
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,9 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.hamzaazam.fyp_frontend.Model.BillM;
 import com.hamzaazam.fyp_frontend.R;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.HashMap;
 
 import es.dmoral.toasty.Toasty;
@@ -45,7 +34,7 @@ import es.dmoral.toasty.Toasty;
 public class BillTextFragment extends Fragment {
 
     public final static String BILLID_RECEIVE = "data_receive";
-    String receivedBillId;
+    private String receivedBillId;
 
     View vieww;
     ////Setting & getting profile data
@@ -57,14 +46,15 @@ public class BillTextFragment extends Fragment {
 
 
     ///
-    TextView tvBillTitle;
-    EditText billAmount;
-    EditText billDate;
-    EditText billCustomerName;
-    EditText billCustomerAddress;
-    EditText billAddNote;
-    EditText billMeterNo;
-    EditText billUnits;
+
+    private TextView tvBillTitle;
+    private EditText billAmount;
+    private EditText billDate;
+    private EditText billCustomerName;
+    private EditText billCustomerAddress;
+    private EditText billAddNote;
+    private EditText billMeterNo;
+    private EditText billUnits;
     ///
 
     Button btnSaveData;
@@ -112,20 +102,7 @@ public class BillTextFragment extends Fragment {
     }
 
 
-    //In this function we receive the bill id which was clicked by the user
-    @Override
-    public void onStart() {
-        super.onStart();
-        Bundle args = getArguments();
-        if (args != null) {
-            receivedBillId=args.getString(BILLID_RECEIVE);
-            //toast( receivedBillId+ " BillID");
-        }
-        else{
-            receivedBillId="BILL ID was NULL";
-            toast("Bill ID was NULL");
-        }
-
+    void populateDataOnScreen() {
         ////////////////////////
         fuserid= FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -177,6 +154,26 @@ public class BillTextFragment extends Fragment {
         });
 
         ////////////////////////
+    }
+
+    //In this function we receive the bill id which was clicked by the user
+    @Override
+    public void onStart() {
+        super.onStart();
+        Bundle args = getArguments();
+        if (args != null) {
+            receivedBillId=args.getString(BILLID_RECEIVE);
+            //toast( receivedBillId+ " BillID");
+        }
+        else{
+            receivedBillId="BILL ID was NULL";
+
+            toast("Bill ID was NULL");
+        }
+
+
+        //This function popluates the data on screen after grabbing it from Firebase
+        populateDataOnScreen();
 
 
 
@@ -226,7 +223,7 @@ public class BillTextFragment extends Fragment {
     }
 
 
-    private void toast(String msg){
+    protected void toast(String msg){
         Toast.makeText(getActivity(), msg,Toast.LENGTH_SHORT).show();
     }
 

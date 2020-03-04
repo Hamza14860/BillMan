@@ -124,6 +124,9 @@ public class OcrReceiptsFragment extends Fragment {
             public void onClick(View view) {
 //                Intent intent = new Intent(getContext(), CreateCategoryActivity.class);
 //                startActivity(intent);
+                //toast("Coming soon!");
+
+
 
 
 //                FragmentTransaction ft=getChildFragmentManager().beginTransaction();

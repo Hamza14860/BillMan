@@ -51,7 +51,7 @@ public class AllBillsFragment extends Fragment {
 
     RecyclerView recyclerViewBills;
     BillsAdapter billsAdapter;
-    private List<BillM> billMList;
+    protected List<BillM> billMList;
     FloatingActionButton addBillButton;
     FloatingActionButton viewStatsButton;
 

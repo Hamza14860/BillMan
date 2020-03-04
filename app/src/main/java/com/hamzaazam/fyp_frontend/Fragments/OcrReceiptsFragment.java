@@ -91,16 +91,16 @@ public class OcrReceiptsFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 receiptMList.clear();
                 long childrenCount = dataSnapshot.getChildrenCount();
-                Log.e("INFOINFO222", String.valueOf(childrenCount));
+                //Log.e("INFOINFO222", String.valueOf(childrenCount));
                 for(DataSnapshot rec : dataSnapshot.getChildren()){
-                    Log.e("INFOINFO" , rec.toString());
+                   // Log.e("INFOINFO" , rec.toString());
                     ReceiptM e = rec.getValue(ReceiptM.class);
 
-                    Log.e("ERROR", e.toString());
+                  //  Log.e("ERROR", e.toString());
                    // e.setRecCategory(rec.getKey());
 
-                    //e.setCatUrl("None Chosen");
-                    //receiptMList.add(e);
+                    e.setRecImageUrl("None Chosen");
+                    receiptMList.add(e);
                     receiptsAdapter.notifyDataSetChanged();
                     pDialog.hide();
 
@@ -126,11 +126,11 @@ public class OcrReceiptsFragment extends Fragment {
 //                startActivity(intent);
 
 
-                FragmentTransaction ft=getChildFragmentManager().beginTransaction();
-                CreateCategoryFragment ccf=new CreateCategoryFragment();
-                ft.replace(R.id.child_fragment_container,ccf);
-                //ft.addToBackStack(null);
-                ft.commit();
+//                FragmentTransaction ft=getChildFragmentManager().beginTransaction();
+//                CreateCategoryFragment ccf=new CreateCategoryFragment();
+//                ft.replace(R.id.child_fragment_container,ccf);
+//                //ft.addToBackStack(null);
+//                ft.commit();
 
 
 

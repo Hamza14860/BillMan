@@ -98,36 +98,9 @@ public class BillExportFragment extends Fragment {
             }
         });
 
-        btnShareToWhatsapp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO: TEXT SHARE1
-                Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
-                whatsappIntent.setType("text/plain");
-                whatsappIntent.setPackage("com.whatsapp");
-                whatsappIntent.putExtra(Intent.EXTRA_TEXT, "The text you wanted to share");
-                try {
-                    startActivity(whatsappIntent);
-                } catch (android.content.ActivityNotFoundException ex) {
-                   toast("Whatsapp has not been installed.");
-                }
 
-            }
-        });
 
-        btnShareText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ///
-                //TODO: TEXT SHARE2
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
-                sendIntent.setType("text/plain");
-                startActivity(sendIntent);
-                ///
-            }
-        });
+
 
         return view;
     }
@@ -141,29 +114,141 @@ public class BillExportFragment extends Fragment {
         if (args != null) {
             receivedBillId=args.getString(BILLID_RECEIVE);
             //toast( receivedBillId+ " BillID");
+
+            initializeTextToSend();
+
+            btnShareToWhatsapp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //TODO: TEXT SHARE1
+                    Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
+                    whatsappIntent.setType("text/plain");
+                    whatsappIntent.setPackage("com.whatsapp");
+                    if(textToSend!=null || !(textToSend.equals(""))){
+                        whatsappIntent.putExtra(Intent.EXTRA_TEXT, textToSend);
+                    }
+                    else{
+                        whatsappIntent.putExtra(Intent.EXTRA_TEXT, "ERROR: NO BILL TEXT FOUND");
+                    }
+                    try {
+                        startActivity(whatsappIntent);
+                    } catch (android.content.ActivityNotFoundException ex) {
+                        toast("Whatsapp has not been installed.");
+                    }
+
+                }
+            });
+
+            btnShareText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ///
+                    //TODO: TEXT SHARE2
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    if(textToSend!=null || !(textToSend.equals(""))){
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, textToSend);
+                    }
+                    else{
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, "ERROR: NO BILL TEXT FOUND");
+                    }
+                    sendIntent.setType("text/plain");
+                    startActivity(sendIntent);
+                    ///
+                }
+            });
         }
         else{
             receivedBillId="BILL ID was NULL";
             toast("Bill ID was NULL");
+            textToSend="";
         }
     }
 
 
 
-
-
-    public void saveBillTextToPdf(){
-        final PdfDocument document = new PdfDocument();
-
-
+    public void initializeTextToSend(){
+        fuserid= FirebaseAuth.getInstance().getCurrentUser().getUid();
+        reference = FirebaseDatabase.getInstance().getReference("bills").child(fuserid).child(receivedBillId);
 
         textToSend="BILL TEXT";
         textToSend+="\n";
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                BillM bill = dataSnapshot.getValue(BillM.class);
 
+                if(!(bill.getBillCategory().equals("-")) && bill.getBillCategory()!=null) {
+
+                    categoryToSend=bill.getBillCategory();
+                    categoryToSend+="\n";
+                }
+                if(!(bill.getBillAmount().equals("-")) && bill.getBillAmount()!=null) {
+                    textToSend += "Bill Amount: ";
+                    textToSend += bill.getBillAmount();
+                    textToSend+="\n";
+
+                }
+                if(!(bill.getBillDate().equals("-")) && bill.getBillDate()!=null) {
+                    textToSend += "Bill Date: ";
+                    textToSend += bill.getBillDate();
+                    textToSend+="\n";
+                }
+                if(!(bill.getBillCustomerName().equals("-")) && bill.getBillCustomerName()!=null) {
+                    textToSend += "Bill Customer Name: ";
+                    textToSend += bill.getBillCustomerName();
+                    textToSend += "\n";
+                }
+                if(!(bill.getBillAddNote().equals("-")) && bill.getBillAddNote()!=null) {
+                    textToSend+="Additional Note: ";
+                    textToSend+=bill.getBillAddNote();
+                    textToSend+="\n";
+                }
+                if(!(bill.getBillImageUrl().equals("None Chosen")) && bill.getBillImageUrl()!=null) {
+                    try {
+                        billImage=Image.getInstance(bill.getBillImageUrl());
+                    } catch (BadElementException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if(bill.getBillImageUrl().equals("None Chosen")){
+                    try {
+                        billImage=Image.getInstance(getURLForResource(R.drawable.bill1));
+
+                    } catch (BadElementException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                //TODO: ALSO WRITE OTHER BILL ATTR TO PDF
+                if (bill.getBillCategory().equals("PTCL")){//hide units and meter no if category is ptcl
+
+                }
+                else{//Hide phone no card view if bill category is either iesco or sui gas
+
+                }
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                toast("DATABASE ERROR WHEN GETTING BILL DETAILS");
+            }
+        });
+    }
+
+
+    public void saveBillTextToPdf(){
         fuserid= FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-
         reference = FirebaseDatabase.getInstance().getReference("bills").child(fuserid).child(receivedBillId);
+
+
+        final PdfDocument document = new PdfDocument();
+
+        textToSend="BILL TEXT";
+        textToSend+="\n";
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -222,9 +307,7 @@ public class BillExportFragment extends Fragment {
                 else{//Hide phone no card view if bill category is either iesco or sui gas
 
                 }
-
                 createAndDisplayPdf(textToSend,categoryToSend,billImage);
-
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

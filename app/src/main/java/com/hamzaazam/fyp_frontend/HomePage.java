@@ -86,7 +86,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new HomeFragment()).commit();
+                    new HomeFragment()).addToBackStack(null).commit();
             navigationView.setCheckedItem(R.id.nav_home);
         }
 
@@ -117,28 +117,28 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                     case R.id.nav_home:
                         getSupportActionBar().setTitle(" OCR Bill Categories ");
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                new HomeFragment()).commit();
+                                new HomeFragment()).addToBackStack(null).commit();
                         break;
                     case R.id.nav_players:
                         getSupportActionBar().setTitle(" OCR Receipts ");
 
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                new OcrReceiptsFragment()).commit();
+                                new OcrReceiptsFragment()).addToBackStack(null).commit();
                         break;
                     case R.id.nav_profile:
                         getSupportActionBar().setTitle(" Profile ");
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                new ProfileFragment()).commit();
+                                new ProfileFragment()).addToBackStack(null).commit();
                         break;
                     case R.id.nav_events:
                         getSupportActionBar().setTitle(" Other Docs ");
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                new OtherDocsFragment()).commit();
+                                new OtherDocsFragment()).addToBackStack(null).commit();
                         break;
                     case R.id.nav_help:
                         getSupportActionBar().setTitle(" Help ");
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                new HomeFragment()).commit();
+                                new HomeFragment()).addToBackStack(null).commit();
                         break;
                     case R.id.nav_logout:
 
@@ -240,12 +240,18 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     public void SetNavHeader(){
         FirebaseUser user = mAuth.getCurrentUser();
 
-        if(user.getPhotoUrl() != null){
+        if(user.getPhotoUrl() == null || user.getPhotoUrl().toString().equals("None Chosen")){
             Glide.with(this)
-                    .load(user.getPhotoUrl())
+                    .load(R.mipmap.contact_photo_def)
                     .into(NavprofileImage);
 
         }
+        else{
+            Glide.with(this)
+                    .load(user.getPhotoUrl())
+                    .into(NavprofileImage);
+        }
+
 
         if(user.getDisplayName() != null) {
             NavName.setText(user.getDisplayName());

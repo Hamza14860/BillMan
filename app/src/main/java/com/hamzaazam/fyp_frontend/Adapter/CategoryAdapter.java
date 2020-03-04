@@ -88,6 +88,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
                 ((Fragment) frag).getChildFragmentManager().beginTransaction()
                         .replace(R.id.child_fragment_container, fragmentB)
+                        .addToBackStack(null)
                         .commit();
 
 //                Intent intent=new Intent(mContext, SingleCategoryActivity.class);

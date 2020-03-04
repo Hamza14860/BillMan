@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,6 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.hamzaazam.fyp_frontend.Adapter.BillsAdapter;
+import com.hamzaazam.fyp_frontend.HomeFragment;
 import com.hamzaazam.fyp_frontend.Model.BillM;
 import com.hamzaazam.fyp_frontend.R;
 import com.hamzaazam.fyp_frontend.ViewStatsActivity;
@@ -59,6 +63,8 @@ public class AllBillsFragment extends Fragment {
 
 
     String fuserid;//current user logged in
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -190,8 +196,28 @@ public class AllBillsFragment extends Fragment {
 
 
         ///////////
+
+//        view.setOnKeyListener(new View.OnKeyListener() {
+//            @Override public boolean onKey(View v, int keyCode, KeyEvent event)
+//            {
+//                if (keyCode == KeyEvent.KEYCODE_BACK)
+//                {
+//                    toast("Select Option From Navigation Drawer");
+//                    //getActivity().getSupportFragmentManager().popBackStackImmediate() ;
+//
+////                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+////                            new HomeFragment()).commit();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
         return view;
     }
+
+
+
+
 
 
     private void searchBills(String s){
@@ -254,6 +280,26 @@ public class AllBillsFragment extends Fragment {
             receivedCategoryName="Category Name was NULL";
             toast("Category Name was NULL");
         }
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // This callback will only be called when MyFragment is at least Started.
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                toast("Select Option From Navigation Drawer");
+                //getActivity().getSupportFragmentManager().popBackStackImmediate();
+                //getChildFragmentManager().popBackStackImmediate();
+
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
+        // The callback can be enabled or disabled here or in handleOnBackPressed()
     }
 
     @Override

@@ -210,9 +210,6 @@ public class HomeFragment extends Fragment {
         return Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +resourceId).toString();
     }
 
-    private void toast(String msg){
-        Toast.makeText(getActivity(), msg,Toast.LENGTH_LONG).show();
-    }
     public void makeToast(View view, String msg){
 
         int x = view.getLeft()+50;

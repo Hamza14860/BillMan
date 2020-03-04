@@ -1,14 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="8dp"
+    android:background="#e6e6e6"
     tools:context=".Fragments.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#fff">
 
-</FrameLayout>
+        <RelativeLayout
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/profileImage"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:src="@mipmap/ic_launcher"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Name"
+                android:layout_below="@id/profileImage"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:textStyle="bold"
+                android:id="@+id/tvUsername"
+                android:textSize="16sp"
+                android:layout_marginBottom="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:layout_below="@id/tvUsername"
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                android:id="@+id/tvEmail"
+                android:textSize="16sp"
+                android:layout_marginBottom="20dp"/>
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:layout_below="@id/cvp"
+        android:layout_centerHorizontal="true"
+        android:text="Delete Account"
+        android:textColor="@color/white"
+        android:scaleType="centerCrop"
+        android:backgroundTint="@color/lightred"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_delete_white_24dp"
+        android:id="@+id/btnDelAccount"
+        android:layout_marginTop="8dp"
+        />
+
+    <Button
+        android:layout_below="@id/btnDelAccount"
+        android:layout_centerHorizontal="true"
+        android:text="Logout"
+        android:textColor="@color/white"
+        android:scaleType="centerCrop"
+        android:backgroundTint="@color/green"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnLogout"
+        android:drawableLeft="@drawable/ic_done_white_24dp"
+        android:layout_marginTop="8dp"
+        />
+
+
+</RelativeLayout>

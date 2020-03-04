@@ -65,7 +65,7 @@ public class BillImageFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             receivedBillId=args.getString(BILLID_RECEIVE);
-            toast( receivedBillId+ " BillID");
+            //toast( receivedBillId+ " BillID");
         }
         else{
             receivedBillId="BILL ID was NULL";

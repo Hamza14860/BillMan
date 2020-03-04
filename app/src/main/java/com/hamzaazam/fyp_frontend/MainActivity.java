@@ -165,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 } else {
+                    //TODO: ERROR IF WIFI NOT CONNECTED
                     String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
                     //if sign in failed
                     switch (errorCode) {

@@ -119,7 +119,7 @@ public class BillTextFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             receivedBillId=args.getString(BILLID_RECEIVE);
-            toast( receivedBillId+ " BillID");
+            //toast( receivedBillId+ " BillID");
         }
         else{
             receivedBillId="BILL ID was NULL";
@@ -227,7 +227,7 @@ public class BillTextFragment extends Fragment {
 
 
     private void toast(String msg){
-        Toast.makeText(getActivity(), msg,Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), msg,Toast.LENGTH_SHORT).show();
     }
 
 }

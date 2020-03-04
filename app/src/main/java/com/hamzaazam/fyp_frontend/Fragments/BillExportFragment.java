@@ -3,9 +3,8 @@ package com.hamzaazam.fyp_frontend.Fragments;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
+
+import android.content.pm.PackageManager;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,9 +18,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,15 +29,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hamzaazam.fyp_frontend.Model.BillM;
 import com.hamzaazam.fyp_frontend.R;
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
+import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
@@ -60,6 +64,7 @@ public class BillExportFragment extends Fragment {
 
     DatabaseReference reference;
     String fuserid;
+    Image billImage;
 
     public BillExportFragment() {
         // Required empty public constructor
@@ -191,6 +196,25 @@ public class BillExportFragment extends Fragment {
                     textToSend+=bill.getBillAddNote();
                     textToSend+="\n";
                 }
+                if(!(bill.getBillImageUrl().equals("None Chosen")) && bill.getBillImageUrl()!=null) {
+                    try {
+                        billImage=Image.getInstance(bill.getBillImageUrl());
+                    } catch (BadElementException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if(bill.getBillImageUrl().equals("None Chosen")){
+                    try {
+                        billImage=Image.getInstance(getURLForResource(R.drawable.bill1));
+
+                    } catch (BadElementException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
                 //TODO: ALSO WRITE OTHER BILL ATTR TO PDF
                 if (bill.getBillCategory().equals("PTCL")){//hide units and meter no if category is ptcl
 
@@ -199,7 +223,7 @@ public class BillExportFragment extends Fragment {
 
                 }
 
-                createAndDisplayPdf(textToSend,categoryToSend);
+                createAndDisplayPdf(textToSend,categoryToSend,billImage);
 
             }
             @Override
@@ -212,7 +236,7 @@ public class BillExportFragment extends Fragment {
     }
 
     // Method for creating a pdf file from text, saving it then opening it for display
-    public void createAndDisplayPdf(String text,String title) {
+    public void createAndDisplayPdf(String text,String title,Image billImg) {
 
         Document doc = new Document();
 
@@ -231,13 +255,51 @@ public class BillExportFragment extends Fragment {
             //open the document
             doc.open();
 
+            Paragraph pT = new Paragraph(title);
+            Font paraFont1= new Font(Font.getFamily("COURIER"));
+            pT.setAlignment(Paragraph.ALIGN_CENTER);
+
+            pT.setFont(paraFont1);
+
+            //add paragraph to document
+            doc.add(pT);
+
+
+
             Paragraph p1 = new Paragraph(text);
             Font paraFont= new Font(Font.getFamily("COURIER"));
-            p1.setAlignment(Paragraph.ALIGN_CENTER);
+            p1.setAlignment(Paragraph.ALIGN_LEFT);
             p1.setFont(paraFont);
 
             //add paragraph to document
             doc.add(p1);
+
+            //Add the Bill Image
+            //TODO: ADD BILL IMAGE TO PDF
+            Paragraph pI = new Paragraph();
+            Chunk c = new Chunk("Bill Image: ");
+            pI.add(c);
+
+            if(billImg!=null){
+                c = new Chunk(billImg, 0, -24);
+                pI.add(c);
+
+                doc.add(pI);
+                ///
+//                int indentation = 0;
+//                float scaler = ((doc.getPageSize().getWidth() - doc.leftMargin()
+//                        - doc.rightMargin() - indentation) / billImg.getWidth()) * 100;
+//
+//                billImg.scalePercent(scaler);
+//                doc.add(billImg);
+
+                ///
+            }
+            else{
+                c = new Chunk(" - ");
+                pI.add(c);
+                doc.add(pI);
+            }
 
 
             Toasty.info(getContext(), "PDF Made At Directory: "+path, Toast.LENGTH_LONG, true).show();
@@ -256,7 +318,8 @@ public class BillExportFragment extends Fragment {
        // viewPdf("newFile.pdf", "Dir");
     }
 
-    // Method for opening a pdf file
+    // Method for opening a pdf file.
+    // NOT ENTIRELY CORRECT
     private void viewPdf(String file, String directory) {
 
         File pdfFile = new File(Environment.getExternalStorageDirectory() + "/" + directory + "/" + file);
@@ -273,6 +336,12 @@ public class BillExportFragment extends Fragment {
             toast("Cant Read PDF File");
         }
     }
+
+    public String getURLForResource (int resourceId) {
+        //use BuildConfig.APPLICATION_ID instead of R.class.getPackage().getName() if both are not same
+        return Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +resourceId).toString();
+    }
+
 
     private void toast(String msg){
         Toast.makeText(getActivity(), msg,Toast.LENGTH_LONG).show();

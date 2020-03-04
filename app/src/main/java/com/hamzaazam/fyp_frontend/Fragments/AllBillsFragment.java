@@ -274,7 +274,7 @@ public class AllBillsFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             receivedCategoryName=args.getString(DATA_RECEIVE);
-            toast( receivedCategoryName+ " Bills");
+            //toast( receivedCategoryName+ " Bills");
         }
         else{
             receivedCategoryName="Category Name was NULL";

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.HelpFragment"
+    android:orientation="vertical"
+    android:focusableInTouchMode="true">
+
+
+    <EditText
+        android:drawableRight="@drawable/ic_search_black_24dp"
+        android:padding="10dp"
+        android:elevation="5dp"
+        android:singleLine="true"
+        android:textColorHint="@color/darkgrey_gn"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="5dp"
+        android:hint="Search Help"
+        android:textSize="15dp"
+        android:id="@+id/searchHelp"
+        android:background="@drawable/sansi_edittext"
+        />
+
+    <TextView
+        android:id="@+id/helpRequestAddCat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/darkgrey_gn"
+        android:text="How to add a custom OCR bill category"
+        android:textSize="14dp"
+        android:padding="15dp"
+        android:drawableRight="@drawable/drop_down_arrow"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="3dp"
+        />
+    <TextView
+        android:id="@+id/helpRequestAddCatDetails"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textSize="14dp"
+        android:padding="15dp"
+        android:layout_marginLeft="25dp"
+        android:text="New OCR Bill Category can be only added by an Admin.
+        \nSteps are as Follows:
+        \n1. Send an Email to i16xxxx@nu.edu.pk requesting category addition.
+        \n2. Secondly, send the Images Dataset to the admin for thr bill you want to OCR.
+        \n3. Tell us about the data you want us to extract from the bill.
+        \n4. Finally, You will be informed via a when the request is completed.
+        \n5. It can take upto 3 weeks to complete your request.
+        \nNote: Also note that you will be charged for this request. Email for further information."
+        android:visibility="gone"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="15dp"
+        android:layout_marginHorizontal="35dp"
+        />
+
+    <TextView
+        android:id="@+id/helpOcr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/darkgrey_gn"
+        android:text="What is OCR?"
+        android:textSize="14dp"
+        android:padding="15dp"
+        android:drawableRight="@drawable/drop_down_arrow"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="3dp"
+        />
+    <TextView
+        android:id="@+id/helpOcrDetails"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textSize="14dp"
+        android:padding="15dp"
+        android:layout_marginLeft="25dp"
+        android:text="OCR or Optical Character Recognition is the technique through which Text is extracted from Images.
+        \nIn our case we apply AI and Machine Learning techniques to extract Text from Bills and Receipt."
+        android:visibility="gone"
+        />
+
+
+
+</LinearLayout>

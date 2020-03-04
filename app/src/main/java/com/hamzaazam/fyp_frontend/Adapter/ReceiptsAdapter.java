@@ -56,7 +56,7 @@ public class ReceiptsAdapter extends RecyclerView.Adapter<ReceiptsAdapter.BillsV
         recImageurl=rec.getRecImageUrl();
 
         if(recImageurl ==null || recImageurl.equals("None Chosen")){
-            holder.recImage.setImageResource(R.mipmap.bill1);
+            holder.recImage.setImageResource(R.drawable.receipt1);
         }
         else{
             Glide.with(mContext).load(recImageurl).into(holder.recImage);

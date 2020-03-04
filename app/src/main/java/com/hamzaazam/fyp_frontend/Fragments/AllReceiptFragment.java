@@ -26,7 +26,7 @@ public class AllReceiptFragment extends AllBillsFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_all_bills, container, false);
+        View view = inflater.inflate(R.layout.fragment_all_bills, container, false);
 
         ////////////
 
@@ -43,7 +43,7 @@ public class AllReceiptFragment extends AllBillsFragment {
 
 
         //////////////
-        fuserid= FirebaseAuth.getInstance().getCurrentUser().getUid();
+        fuserid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
         //Populating Category list
@@ -55,11 +55,11 @@ public class AllReceiptFragment extends AllBillsFragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 billMList.clear();
-                for(DataSnapshot bill : dataSnapshot.getChildren()){
+                for (DataSnapshot bill : dataSnapshot.getChildren()) {
                     BillM e = bill.getValue(BillM.class);
                     //TODO : bill text might have issue when receiving it
                     //to only show the clicked category bills
-                    if(e.getBillCategory().equals(receivedCategoryName)){
+                    if (e.getBillCategory().equals(receivedCategoryName)) {
                         e.setBillId(bill.getKey());
                         e.setUserID(fuserid);
                         billMList.add(e);
@@ -69,9 +69,14 @@ public class AllReceiptFragment extends AllBillsFragment {
                     pDialog.hide();
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
 
+        return view;
+    }
+
 }
+

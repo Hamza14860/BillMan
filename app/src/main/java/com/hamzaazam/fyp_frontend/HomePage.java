@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.hamzaazam.fyp_frontend.Fragments.HelpFragment;
 import com.hamzaazam.fyp_frontend.Fragments.OcrReceiptsFragment;
 import com.hamzaazam.fyp_frontend.Fragments.OtherDocsFragment;
 import com.hamzaazam.fyp_frontend.Fragments.ProfileFragment;
@@ -138,7 +139,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                     case R.id.nav_help:
                         getSupportActionBar().setTitle(" Help ");
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                new HomeFragment()).addToBackStack(null).commit();
+                                new HelpFragment()).addToBackStack(null).commit();
                         break;
                     case R.id.nav_logout:
 

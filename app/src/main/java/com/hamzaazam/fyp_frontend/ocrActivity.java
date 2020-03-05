@@ -365,6 +365,8 @@ public class ocrActivity extends AppCompatActivity {
 
 
 
+
+
     /////////////////CAMERA & GALLERY METHODS
 
     ///Show options dialog box (to select image from camera or gallery)

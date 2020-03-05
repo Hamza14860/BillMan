@@ -158,7 +158,7 @@ public class OcrReceiptsFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                searchCategories(charSequence.toString());
+                //searchCategories(charSequence.toString());
             }
 
             @Override

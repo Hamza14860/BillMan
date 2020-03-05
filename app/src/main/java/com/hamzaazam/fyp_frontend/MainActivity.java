@@ -166,47 +166,98 @@ public class MainActivity extends AppCompatActivity {
 
                 } else {
                     //TODO: ERROR IF WIFI NOT CONNECTED
-                    String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
-                    //if sign in failed
-                    switch (errorCode) {
+////                    String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
+////                    //if sign in failed
+////                    switch (errorCode) {
+////
+////                        case "ERROR_INVALID_CUSTOM_TOKEN":
+////                            toast("The custom token format is incorrect. Please check the documentation.");
+////                            break;
+////
+////                        case "ERROR_CUSTOM_TOKEN_MISMATCH":
+////                            Toast.makeText(MainActivity.this, "The custom token corresponds to a different audience.", Toast.LENGTH_LONG).show();
+////                            break;
+////
+////                        case "ERROR_INVALID_CREDENTIAL":
+////                            Toast.makeText(MainActivity.this, "The supplied auth credential is malformed or has expired.", Toast.LENGTH_LONG).show();
+////                            break;
+////
+////                        case "ERROR_INVALID_EMAIL":
+////                            Toast.makeText(MainActivity.this, "The email address is badly formatted.", Toast.LENGTH_LONG).show();
+////                            userEmail.setError("The email address is badly formatted.");
+////                            userEmail.requestFocus();
+////                            break;
+////                        case "ERROR_WRONG_PASSWORD":
+////                            Toast.makeText(MainActivity.this, "The password is invalid or the user does not have a password.", Toast.LENGTH_LONG).show();
+////                            userPassword.requestFocus();
+////                            userPassword.setText("");
+////                            userPassword.setError("password is incorrect ");
+////                            ResetPassword();
+////                            break;
+////                        case "ERROR_USER_MISMATCH":
+////                            Toast.makeText(MainActivity.this, "The supplied credentials do not correspond to the previously signed in user.", Toast.LENGTH_LONG).show();
+////                            break;
+////                        case "ERROR_USER_TOKEN_EXPIRED":
+////                            Toast.makeText(MainActivity.this, "The user\\'s credential is no longer valid. The user must sign in again.", Toast.LENGTH_LONG).show();
+////                            break;
+////                        case "ERROR_USER_NOT_FOUND":
+////                            Toast.makeText(MainActivity.this, "There is no user record corresponding to this identifier. The user may have been deleted.", Toast.LENGTH_LONG).show();
+////                            break;
+////                        case "ERROR_INVALID_USER_TOKEN":
+////                            Toast.makeText(MainActivity.this, "The user\\'s credential is no longer valid. The user must sign in again.", Toast.LENGTH_LONG).show();
+////                            break;
+//                    }
 
-                        case "ERROR_INVALID_CUSTOM_TOKEN":
-                            toast("The custom token format is incorrect. Please check the documentation.");
-                            break;
+                    String errorCode;
+                    if(task.getException() instanceof  FirebaseAuthException){
+                        errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
 
-                        case "ERROR_CUSTOM_TOKEN_MISMATCH":
-                            Toast.makeText(MainActivity.this, "The custom token corresponds to a different audience.", Toast.LENGTH_LONG).show();
-                            break;
+                        switch (errorCode) {
+                            case "ERROR_INVALID_CUSTOM_TOKEN":
+                                toast("The custom token format is incorrect. Please check the documentation.");
+                                break;
 
-                        case "ERROR_INVALID_CREDENTIAL":
-                            Toast.makeText(MainActivity.this, "The supplied auth credential is malformed or has expired.", Toast.LENGTH_LONG).show();
-                            break;
+                            case "ERROR_CUSTOM_TOKEN_MISMATCH":
+                                Toast.makeText(MainActivity.this, "The custom token corresponds to a different audience.", Toast.LENGTH_LONG).show();
+                                break;
 
-                        case "ERROR_INVALID_EMAIL":
-                            Toast.makeText(MainActivity.this, "The email address is badly formatted.", Toast.LENGTH_LONG).show();
-                            userEmail.setError("The email address is badly formatted.");
-                            userEmail.requestFocus();
-                            break;
-                        case "ERROR_WRONG_PASSWORD":
-                            Toast.makeText(MainActivity.this, "The password is invalid or the user does not have a password.", Toast.LENGTH_LONG).show();
-                            userPassword.requestFocus();
-                            userPassword.setText("");
-                            userPassword.setError("password is incorrect ");
-                            ResetPassword();
-                            break;
-                        case "ERROR_USER_MISMATCH":
-                            Toast.makeText(MainActivity.this, "The supplied credentials do not correspond to the previously signed in user.", Toast.LENGTH_LONG).show();
-                            break;
-                        case "ERROR_USER_TOKEN_EXPIRED":
-                            Toast.makeText(MainActivity.this, "The user\\'s credential is no longer valid. The user must sign in again.", Toast.LENGTH_LONG).show();
-                            break;
-                        case "ERROR_USER_NOT_FOUND":
-                            Toast.makeText(MainActivity.this, "There is no user record corresponding to this identifier. The user may have been deleted.", Toast.LENGTH_LONG).show();
-                            break;
-                        case "ERROR_INVALID_USER_TOKEN":
-                            Toast.makeText(MainActivity.this, "The user\\'s credential is no longer valid. The user must sign in again.", Toast.LENGTH_LONG).show();
-                            break;
+                            case "ERROR_INVALID_CREDENTIAL":
+                                Toast.makeText(MainActivity.this, "The supplied auth credential is malformed or has expired.", Toast.LENGTH_LONG).show();
+                                break;
+
+                            case "ERROR_INVALID_EMAIL":
+                                Toast.makeText(MainActivity.this, "The email address is badly formatted.", Toast.LENGTH_LONG).show();
+                                userEmail.setError("The email address is badly formatted.");
+                                userEmail.requestFocus();
+                                break;
+                            case "ERROR_WRONG_PASSWORD":
+                                Toast.makeText(MainActivity.this, "The password is invalid or the user does not have a password.", Toast.LENGTH_LONG).show();
+                                userPassword.requestFocus();
+                                userPassword.setText("");
+                                userPassword.setError("password is incorrect ");
+                                ResetPassword();
+                                break;
+                            case "ERROR_USER_MISMATCH":
+                                Toast.makeText(MainActivity.this, "The supplied credentials do not correspond to the previously signed in user.", Toast.LENGTH_LONG).show();
+                                break;
+                            case "ERROR_USER_TOKEN_EXPIRED":
+                                Toast.makeText(MainActivity.this, "The user\\'s credential is no longer valid. The user must sign in again.", Toast.LENGTH_LONG).show();
+                                break;
+                            case "ERROR_USER_NOT_FOUND":
+                                Toast.makeText(MainActivity.this, "There is no user record corresponding to this identifier. The user may have been deleted.", Toast.LENGTH_LONG).show();
+                                break;
+                            case "ERROR_INVALID_USER_TOKEN":
+                                Toast.makeText(MainActivity.this, "The user\\'s credential is no longer valid. The user must sign in again.", Toast.LENGTH_LONG).show();
+                                break;
+                        }
                     }
+                    else{
+                        errorCode="";
+                        toast("Check Your Network Connection");
+
+                    }
+
+
                 }
             }
         });

@@ -211,6 +211,9 @@ public class BillTextFragment extends Fragment {
         fuserid=FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference reference2=FirebaseDatabase.getInstance().getReference("bills").child(fuserid).child(receivedBillId);
         HashMap<String ,Object> map2 =new HashMap<>();
+
+        HashMap<String ,Object> billTextMap =new HashMap<>();
+
         if(billAddNote.getText()!=null) {
             map2.put("billAddNote", billAddNote.getText().toString());
         }
@@ -228,17 +231,67 @@ public class BillTextFragment extends Fragment {
         {
             //TODO
             //Update other fields in billText Node
+            //else cond check
+            if(billCustomerAddress.getText().toString()!=null && !(billCustomerAddress.getText().toString().equals("")))
+            {
+                billTextMap.put("Address",billCustomerAddress.getText().toString());
+            }
+            if(billAmount.getText().toString()!=null && !(billAmount.getText().toString().equals("")))
+            {
+                billTextMap.put("Amount",billAmount.getText().toString());
+            }
+            if(billDate.getText().toString()!=null && !(billDate.getText().toString().equals("")))
+            {
+                billTextMap.put("Date",billDate.getText().toString());
+            }
+            if(billCustomerName.getText().toString()!=null && !(billCustomerName.getText().toString().equals("")))
+            {
+                billTextMap.put("Name",billCustomerName.getText().toString());
+            }
+            if(billPhoneNo.getText().toString()!=null && !(billPhoneNo.getText().toString().equals("")))
+            {
+                billTextMap.put("PhoneNumber",billPhoneNo.getText().toString());
+            }
+            billTextMap.put("Title",tvBillTitle.getText().toString());
+
+            map2.put("billText",billTextMap);
         }
-        else if(tvBillTitle.getText().toString().equals("IESCO") || tvBillTitle.getText().toString().contains("ISLAMABAD") )
+        else if((tvBillTitle.getText().toString().equals("IESCO") || tvBillTitle.getText().toString().contains("ISLAMABAD"))
+        ||(tvBillTitle.getText().toString().equals("SUI GAS") || tvBillTitle.getText().toString().contains("GAS")))
         {
             //TODO
             //Update other fields in billText Node
+            //else cond check
+            if(billCustomerAddress.getText().toString()!=null && !(billCustomerAddress.getText().toString().equals("")))
+            {
+                billTextMap.put("Address",billCustomerAddress.getText().toString());
+            }
+            if(billAmount.getText().toString()!=null && !(billAmount.getText().toString().equals("")))
+            {
+                billTextMap.put("Amount",billAmount.getText().toString());
+            }
+            if(billDate.getText().toString()!=null && !(billDate.getText().toString().equals("")))
+            {
+                billTextMap.put("Date",billDate.getText().toString());
+            }
+            if(billMeterNo.getText().toString()!=null && !(billMeterNo.getText().toString().equals("")))
+            {
+                billTextMap.put("Meter",billMeterNo.getText().toString());
+            }
+            if(billCustomerName.getText().toString()!=null && !(billCustomerName.getText().toString().equals("")))
+            {
+                billTextMap.put("Name",billCustomerName.getText().toString());
+            }
+
+            billTextMap.put("Title",tvBillTitle.getText().toString());
+
+            if(billUnits.getText().toString()!=null && !(billUnits.getText().toString().equals("")))
+            {
+                billTextMap.put("Units",billUnits.getText().toString());
+            }
+            map2.put("billText",billTextMap);
         }
-        else if(tvBillTitle.getText().toString().equals("SUI GAS") || tvBillTitle.getText().toString().contains("GAS") )
-        {
-            //TODO
-            //Update other fields in billText Node
-        }
+
 
         reference2.updateChildren(map2);
 

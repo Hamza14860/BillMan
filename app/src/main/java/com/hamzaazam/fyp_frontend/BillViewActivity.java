@@ -25,6 +25,7 @@ public class BillViewActivity extends AppCompatActivity {
 
     public Toolbar toolbar;
     private String billId;
+    private ViewPagerAdapter viewPagerAdapter;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -37,6 +38,16 @@ public class BillViewActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    void setTitleActionBar() {
+        getSupportActionBar().setTitle(" Bill View");
+    }
+
+
+    void getContentFromIntent() {
+        Intent intent = getIntent();
+        billId=intent.getStringExtra("billid");
+        toast(billId);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,31 +55,37 @@ public class BillViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bill_view);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(" Bill View");
+        setTitleActionBar();
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        Intent intent = getIntent();
-        billId=intent.getStringExtra("billid");
-        toast(billId);
+        getContentFromIntent();
 
 
         ///////Add View Pager and tab layout..
+
+        populateViewPagerAdapter();
+
+
+
+    }
+
+    void populateViewPagerAdapter() {
+
+
         TabLayout tabLayout=findViewById(R.id.tabLayoutbill);
         ViewPager viewPager=findViewById(R.id.viewPagerbill);
 
-        ViewPagerAdapter viewPagerAdapter=new ViewPagerAdapter(getSupportFragmentManager());
 
+
+        viewPagerAdapter=new ViewPagerAdapter(getSupportFragmentManager());
 
         viewPagerAdapter.addFragment(new BillImageFragment(),"Image");
         viewPagerAdapter.addFragment(new BillTextFragment(),"Text");
         viewPagerAdapter.addFragment(new BillExportFragment(),"Export");
 
-
         viewPager.setAdapter(viewPagerAdapter);
 
         tabLayout.setupWithViewPager(viewPager);
-
 
     }
 
@@ -119,7 +136,7 @@ public class BillViewActivity extends AppCompatActivity {
     //////
 
 
-    private void toast(String msg){
+    protected void toast(String msg){
         Toast.makeText(getApplicationContext(), msg,Toast.LENGTH_LONG).show();
     }
 

@@ -95,6 +95,7 @@ public class OcrReceiptsFragment extends Fragment {
                 for(DataSnapshot rec : dataSnapshot.getChildren()){
                    // Log.e("INFOINFO" , rec.toString());
                     ReceiptM e = rec.getValue(ReceiptM.class);
+                    e.setRecId(rec.getKey());
 
                   //  Log.e("ERROR", e.toString());
                    // e.setRecCategory(rec.getKey());

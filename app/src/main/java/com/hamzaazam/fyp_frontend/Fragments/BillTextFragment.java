@@ -45,7 +45,7 @@ import es.dmoral.toasty.Toasty;
 public class BillTextFragment extends Fragment {
 
     public final static String BILLID_RECEIVE = "data_receive";
-    String receivedBillId;
+    private String receivedBillId;
 
     View vieww;
     ////Setting & getting profile data
@@ -57,15 +57,15 @@ public class BillTextFragment extends Fragment {
 
 
     ///
-    TextView tvBillTitle;
-    EditText billAmount;
-    EditText billDate;
-    EditText billCustomerName;
-    EditText billCustomerAddress;
-    EditText billAddNote;
-    EditText billMeterNo;
-    EditText billUnits;
-    EditText billPhoneNo;
+    private EditText billPhoneNo;
+    private TextView tvBillTitle;
+    private EditText billAmount;
+    private EditText billDate;
+    private EditText billCustomerName;
+    private EditText billCustomerAddress;
+    private EditText billAddNote;
+    private EditText billMeterNo;
+    private EditText billUnits;
     ///
 
     Button btnSaveData;
@@ -114,20 +114,7 @@ public class BillTextFragment extends Fragment {
     }
 
 
-    //In this function we receive the bill id which was clicked by the user
-    @Override
-    public void onStart() {
-        super.onStart();
-        Bundle args = getArguments();
-        if (args != null) {
-            receivedBillId=args.getString(BILLID_RECEIVE);
-            //toast( receivedBillId+ " BillID");
-        }
-        else{
-            receivedBillId="BILL ID was NULL";
-            toast("Bill ID was NULL");
-        }
-
+    void populateDataOnScreen() {
         ////////////////////////
         fuserid= FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -192,6 +179,26 @@ public class BillTextFragment extends Fragment {
         });
 
         ////////////////////////
+    }
+
+    //In this function we receive the bill id which was clicked by the user
+    @Override
+    public void onStart() {
+        super.onStart();
+        Bundle args = getArguments();
+        if (args != null) {
+            receivedBillId=args.getString(BILLID_RECEIVE);
+            //toast( receivedBillId+ " BillID");
+        }
+        else{
+            receivedBillId="BILL ID was NULL";
+
+            toast("Bill ID was NULL");
+        }
+
+
+        //This function popluates the data on screen after grabbing it from Firebase
+        populateDataOnScreen();
 
 
 
@@ -241,7 +248,7 @@ public class BillTextFragment extends Fragment {
     }
 
 
-    private void toast(String msg){
+    protected void toast(String msg){
         Toast.makeText(getActivity(), msg,Toast.LENGTH_SHORT).show();
     }
 

@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.hamzaazam.fyp_frontend.BillViewActivity;
 import com.hamzaazam.fyp_frontend.Model.ReceiptM;
 import com.hamzaazam.fyp_frontend.R;
+import com.hamzaazam.fyp_frontend.ReceiptViewActivity;
 
 import java.util.List;
 
@@ -81,7 +82,7 @@ public class ReceiptsAdapter extends RecyclerView.Adapter<ReceiptsAdapter.BillsV
 //                        .replace(R.id.child_fragment_container, new AllBillsFragment())
 //                        .commit();
 
-                Intent intent=new Intent(mContext, BillViewActivity.class);
+                Intent intent=new Intent(mContext, ReceiptViewActivity.class);
                     intent.putExtra("recid", mRecs.get(position).getRecId());
                     mContext.startActivity(intent);
 

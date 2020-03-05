@@ -292,13 +292,44 @@ public class ocrActivity extends AppCompatActivity {
 //                                map2.put("listSportPreferences", listArray);
 //                            }
 
-                            map2.put("billAddNote", "-");
-                            map2.put("billAmount", "-");
-                            map2.put("billCategory", "-");
-                            map2.put("billCustomerName", "-");
-                            map2.put("billDate", "-");
-                            map2.put("billImageUrl", "None Chosen");
                             Map<String,Object> jsonMap=toMap(jsonText);
+                            if(jsonMap.containsKey("Amount")){
+                                if(jsonMap.get("Amount").toString()!=null){
+                                    map2.put("billAmount", jsonMap.get("Amount"));
+                                }
+                                else{
+                                    map2.put("billAmount", "-");
+                                }
+                            }
+                            if(jsonMap.containsKey("Title")){
+                                if(jsonMap.get("Title").toString()!=null){
+                                    map2.put("billCateogry", jsonMap.get("Title"));
+                                }
+                                else{
+                                    map2.put("billCategory", "-");
+                                }
+                            }
+                            if(jsonMap.containsKey("Name")){
+                                if(jsonMap.get("Name").toString()!=null){
+                                    map2.put("billCustomerName", jsonMap.get("Name"));
+                                }
+                                else{
+                                    map2.put("billCustomerName", "-");
+                                }
+                            }
+                            if(jsonMap.containsKey("Date")){
+                                if(jsonMap.get("Date").toString()!=null){
+                                    map2.put("billDate", jsonMap.get("Date"));
+                                }
+                                else{
+                                    map2.put("billDate", "-");
+                                }
+                            }
+                            map2.put("billAddNote", "-");
+
+                            //TODO: SET IMAGE URL
+                            map2.put("billImageUrl", "None Chosen");
+
                             map2.put("billText", jsonMap);
 
                             reference2.push().setValue(map2);

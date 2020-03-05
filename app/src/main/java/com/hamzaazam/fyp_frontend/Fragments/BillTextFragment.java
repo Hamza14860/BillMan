@@ -65,6 +65,7 @@ public class BillTextFragment extends Fragment {
     EditText billAddNote;
     EditText billMeterNo;
     EditText billUnits;
+    EditText billPhoneNo;
     ///
 
     Button btnSaveData;
@@ -94,6 +95,7 @@ public class BillTextFragment extends Fragment {
         billDate=view.findViewById(R.id.billDate);
         billMeterNo=view.findViewById(R.id.billMeterNo);
         billUnits=view.findViewById(R.id.billUnits);
+        billPhoneNo=view.findViewById(R.id.phoneNo);
 
         btnSaveData=view.findViewById(R.id.btnSaveData);
 
@@ -136,6 +138,8 @@ public class BillTextFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 BillM bill = dataSnapshot.getValue(BillM.class);
 
+                HashMap<String,Object> billText=bill.getBillText();
+
                 if(!(bill.getBillCategory().equals("-")) && bill.getBillCategory()!=null) {
                     tvBillTitle.setText(bill.getBillCategory());
                 }
@@ -153,22 +157,33 @@ public class BillTextFragment extends Fragment {
                 }
                 if (bill.getBillCategory().equals("PTCL")){//hide units and meter no if category is ptcl
                     cvMno_Units.setVisibility(View.GONE);
+
+                    if(billText.containsKey("PhoneNumber")) {
+                        if(billText.get("PhoneNumber").toString() !=null) {
+                            billPhoneNo.setText(billText.get("PhoneNumber").toString());
+                        }
+                    }
                 }
                 else{//Hide phone no card view if bill category is either iesco or sui gas
                     cvPno.setVisibility(View.GONE);
+
+                    if(billText.containsKey("Units")) {
+                        if (billText.get("Units").toString() !=null) {
+                            billUnits.setText(billText.get("Units").toString());
+                        }
+                    }
+                    if(billText.containsKey("Meter")) {
+                        if (billText.get("Meter").toString() !=null) {
+                            billMeterNo.setText(billText.get("Meter").toString());
+                        }
+                    }
                 }
-//                if(!(bill.getBillCategory().equals("-")) && bill.getBillCategory()!=null) {
-//                    tvBillTitle.setText(bill.getBillCategory());
-//                }
-//                if(!(bill.getBillCategory().equals("-")) && bill.getBillCategory()!=null) {
-//                    tvBillTitle.setText(bill.getBillCategory());
-//                }
-//                if(!(bill.getBillCategory().equals("-")) && bill.getBillCategory()!=null) {
-//                    tvBillTitle.setText(bill.getBillCategory());
-//                }
-//                if(!(bill.getBillCategory().equals("-")) && bill.getBillCategory()!=null) {
-//                    tvBillTitle.setText(bill.getBillCategory());
-//                }
+                if(billText.containsKey("Address")) {
+                    if(billText.get("Address").toString() !=null) {
+                        billCustomerAddress.setText(billText.get("Address").toString());
+                    }
+                }
+
                 /////////
             }
             @Override

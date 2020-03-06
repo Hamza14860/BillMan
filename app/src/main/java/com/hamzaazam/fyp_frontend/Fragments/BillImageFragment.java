@@ -83,7 +83,7 @@ public class BillImageFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 BillM bill = dataSnapshot.getValue(BillM.class);
-                toast(bill.getBillImageUrl()+" "+bill.getBillCustomerName());
+                //toast(bill.getBillImageUrl()+" "+bill.getBillCustomerName());
                 if(bill.getBillImageUrl().equals("None Chosen")){
                     billImageView.setImageResource(R.mipmap.bill1);
                 }

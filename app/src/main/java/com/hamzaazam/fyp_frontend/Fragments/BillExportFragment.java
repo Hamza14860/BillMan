@@ -64,7 +64,7 @@ public class BillExportFragment extends Fragment {
 
     DatabaseReference reference;
     String fuserid;
-    Image billImage;
+    //Image billImage;
 
     public BillExportFragment() {
         // Required empty public constructor
@@ -204,25 +204,25 @@ public class BillExportFragment extends Fragment {
                     textToSend+=bill.getBillAddNote();
                     textToSend+="\n";
                 }
-                if(!(bill.getBillImageUrl().equals("None Chosen")) && bill.getBillImageUrl()!=null) {
-                    try {
-                        billImage=Image.getInstance(bill.getBillImageUrl());
-                    } catch (BadElementException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                else if(bill.getBillImageUrl().equals("None Chosen")){
-                    try {
-                        billImage=Image.getInstance(getURLForResource(R.drawable.bill1));
-
-                    } catch (BadElementException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+//                if(!(bill.getBillImageUrl().equals("None Chosen")) && bill.getBillImageUrl()!=null) {
+//                    try {
+//                        billImage=Image.getInstance(bill.getBillImageUrl());
+//                    } catch (BadElementException e) {
+//                        e.printStackTrace();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                else if(bill.getBillImageUrl().equals("None Chosen")){
+//                    try {
+//                        billImage=Image.getInstance(getURLForResource(R.drawable.bill1));
+//
+//                    } catch (BadElementException e) {
+//                        e.printStackTrace();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
                 //TODO: ALSO WRITE OTHER BILL ATTR TO PDF
                 if (bill.getBillCategory().equals("PTCL")){//hide units and meter no if category is ptcl
 
@@ -281,25 +281,25 @@ public class BillExportFragment extends Fragment {
                     textToSend+=bill.getBillAddNote();
                     textToSend+="\n";
                 }
-                if(!(bill.getBillImageUrl().equals("None Chosen")) && bill.getBillImageUrl()!=null) {
-                    try {
-                        billImage=Image.getInstance(bill.getBillImageUrl());
-                    } catch (BadElementException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                else if(bill.getBillImageUrl().equals("None Chosen")){
-                    try {
-                        billImage=Image.getInstance(getURLForResource(R.drawable.bill1));
-
-                    } catch (BadElementException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+//                if(!(bill.getBillImageUrl().equals("None Chosen")) && bill.getBillImageUrl()!=null) {
+//                    try {
+//                        billImage=Image.getInstance(bill.getBillImageUrl());
+//                    } catch (BadElementException e) {
+//                        e.printStackTrace();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                else if(bill.getBillImageUrl().equals("None Chosen")){
+//                    try {
+//                        billImage=Image.getInstance(getURLForResource(R.drawable.bill1));
+//
+//                    } catch (BadElementException e) {
+//                        e.printStackTrace();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
                 //TODO: ALSO WRITE OTHER BILL ATTR TO PDF
                 if (bill.getBillCategory().equals("PTCL")){//hide units and meter no if category is ptcl
 
@@ -307,7 +307,7 @@ public class BillExportFragment extends Fragment {
                 else{//Hide phone no card view if bill category is either iesco or sui gas
 
                 }
-                createAndDisplayPdf(textToSend,categoryToSend,billImage);
+                createAndDisplayPdf(textToSend,categoryToSend);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -319,7 +319,7 @@ public class BillExportFragment extends Fragment {
     }
 
     // Method for creating a pdf file from text, saving it then opening it for display
-    public void createAndDisplayPdf(String text,String title,Image billImg) {
+    public void createAndDisplayPdf(String text,String title) {
 
         Document doc = new Document();
 
@@ -357,32 +357,26 @@ public class BillExportFragment extends Fragment {
             //add paragraph to document
             doc.add(p1);
 
-            //Add the Bill Image
-            //TODO: ADD BILL IMAGE TO PDF
-            Paragraph pI = new Paragraph();
-            Chunk c = new Chunk("Bill Image: ");
-            pI.add(c);
-
-            if(billImg!=null){
-                c = new Chunk(billImg, 0, -24);
-                pI.add(c);
-
-                doc.add(pI);
-                ///
-//                int indentation = 0;
-//                float scaler = ((doc.getPageSize().getWidth() - doc.leftMargin()
-//                        - doc.rightMargin() - indentation) / billImg.getWidth()) * 100;
+//            //Add the Bill Image
+//            //TODO: ADD BILL IMAGE TO PDF
+//            Paragraph pI = new Paragraph();
+//            Chunk c = new Chunk("Bill Image: ");
+//            pI.add(c);
 //
-//                billImg.scalePercent(scaler);
-//                doc.add(billImg);
-
+//            if(billImg!=null){
+//                c = new Chunk(billImg, 0, -24);
+//                pI.add(c);
+//
+//                doc.add(pI);
                 ///
-            }
-            else{
-                c = new Chunk(" - ");
-                pI.add(c);
-                doc.add(pI);
-            }
+
+
+//            }
+//            else{
+//                c = new Chunk(" - ");
+//                pI.add(c);
+//                doc.add(pI);
+//            }
 
 
             Toasty.info(getContext(), "PDF Made At Directory: "+path, Toast.LENGTH_LONG, true).show();

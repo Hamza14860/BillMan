@@ -16,8 +16,8 @@
         />
     <ImageView
         android:id="@+id/appLogo"
-        android:layout_width="140sp"
-        android:layout_height="140sp"
+        android:layout_width="150sp"
+        android:layout_height="150sp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="80dp"
@@ -27,6 +27,7 @@
 
 
     <TextView
+        android:visibility="invisible"
         android:background="#B9FFFFFF"
         android:paddingHorizontal="5dp"
         android:id="@+id/tvSignIn"

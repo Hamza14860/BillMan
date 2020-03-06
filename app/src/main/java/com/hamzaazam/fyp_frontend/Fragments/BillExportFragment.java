@@ -183,23 +183,23 @@ public class BillExportFragment extends Fragment {
                     categoryToSend=bill.getBillCategory();
                     categoryToSend+="\n";
                 }
-                if(!(bill.getBillAmount().equals("-")) && bill.getBillAmount()!=null) {
+                if( bill.getBillAmount()!=null) {
                     textToSend += "Bill Amount: ";
                     textToSend += bill.getBillAmount();
                     textToSend+="\n";
 
                 }
-                if(!(bill.getBillDate().equals("-")) && bill.getBillDate()!=null) {
+                if(bill.getBillDate()!=null) {
                     textToSend += "Bill Date: ";
                     textToSend += bill.getBillDate();
                     textToSend+="\n";
                 }
-                if(!(bill.getBillCustomerName().equals("-")) && bill.getBillCustomerName()!=null) {
+                if(bill.getBillCustomerName()!=null) {
                     textToSend += "Bill Customer Name: ";
                     textToSend += bill.getBillCustomerName();
                     textToSend += "\n";
                 }
-                if(!(bill.getBillAddNote().equals("-")) && bill.getBillAddNote()!=null) {
+                if( bill.getBillAddNote()!=null) {
                     textToSend+="Additional Note: ";
                     textToSend+=bill.getBillAddNote();
                     textToSend+="\n";
@@ -255,28 +255,28 @@ public class BillExportFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 BillM bill = dataSnapshot.getValue(BillM.class);
 
-                if(!(bill.getBillCategory().equals("-")) && bill.getBillCategory()!=null) {
+                if(bill.getBillCategory()!=null) {
 
                     categoryToSend=bill.getBillCategory();
                     categoryToSend+="\n";
                 }
-                if(!(bill.getBillAmount().equals("-")) && bill.getBillAmount()!=null) {
+                if(bill.getBillAmount()!=null) {
                     textToSend += "Bill Amount: ";
                     textToSend += bill.getBillAmount();
                     textToSend+="\n";
 
                 }
-                if(!(bill.getBillDate().equals("-")) && bill.getBillDate()!=null) {
+                if( bill.getBillDate()!=null) {
                     textToSend += "Bill Date: ";
                     textToSend += bill.getBillDate();
                     textToSend+="\n";
                 }
-                if(!(bill.getBillCustomerName().equals("-")) && bill.getBillCustomerName()!=null) {
+                if(bill.getBillCustomerName()!=null) {
                     textToSend += "Bill Customer Name: ";
                     textToSend += bill.getBillCustomerName();
                     textToSend += "\n";
                 }
-                if(!(bill.getBillAddNote().equals("-")) && bill.getBillAddNote()!=null) {
+                if( bill.getBillAddNote()!=null) {
                     textToSend+="Additional Note: ";
                     textToSend+=bill.getBillAddNote();
                     textToSend+="\n";

@@ -103,6 +103,7 @@ public class AllBillsFragment extends Fragment {
                     BillM e = bill.getValue(BillM.class);
                     //TODO : bill text might have issue when receiving it
                     //to only show the clicked category bills
+                    //toast(e.getBillCategory());
                     if(e.getBillCategory().equals(receivedCategoryName)){
                         e.setBillId(bill.getKey());
                         e.setUserID(fuserid);
@@ -279,7 +280,7 @@ public class AllBillsFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             receivedCategoryName=args.getString(DATA_RECEIVE);
-            //toast( receivedCategoryName+ " Bills");
+           // toast( receivedCategoryName+ " Bills");
         }
         else{
             receivedCategoryName="Category Name was NULL";

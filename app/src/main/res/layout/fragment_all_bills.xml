@@ -38,7 +38,7 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:backgroundTint="@color/white"
+        android:backgroundTint="@color/colorPrimary"
         android:src="@drawable/ocrr"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -55,7 +55,8 @@
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:backgroundTint="@color/white"
+        android:visibility="gone"
+        android:backgroundTint="@color/colorPrimary"
         android:src="@drawable/statsicon3"
         android:layout_width="60dp"
         android:layout_height="60dp"

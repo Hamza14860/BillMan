@@ -1,11 +1,13 @@
 package com.hamzaazam.fyp_frontend;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,9 +28,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -273,8 +283,8 @@ public class ocrActivity extends AppCompatActivity {
                             //Note: View added in this func para
 
                             //enabling wifi
-                            wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-                            enableWifi(v);
+                            //wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                            //enableWifi(v);
 
 
                             String fuserid=FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -303,12 +313,13 @@ public class ocrActivity extends AppCompatActivity {
                             }
                             if(jsonMap.containsKey("Title")){
                                 if(jsonMap.get("Title").toString()!=null){
-                                    map2.put("billCateogry", jsonMap.get("Title"));
+                                    map2.put("billCategory", jsonMap.get("Title"));
                                 }
                                 else{
                                     map2.put("billCategory", "-");
                                 }
                             }
+
                             if(jsonMap.containsKey("Name")){
                                 if(jsonMap.get("Name").toString()!=null){
                                     map2.put("billCustomerName", jsonMap.get("Name"));
@@ -325,10 +336,17 @@ public class ocrActivity extends AppCompatActivity {
                                     map2.put("billDate", "-");
                                 }
                             }
+
                             map2.put("billAddNote", "-");
 
                             //TODO: SET IMAGE URL
+
+
+                            ////
+                            // uploadImageFirebase(billImageBitmap);
                             map2.put("billImageUrl", "None Chosen");
+
+                            /////
 
                             map2.put("billText", jsonMap);
 
@@ -364,6 +382,69 @@ public class ocrActivity extends AppCompatActivity {
     }
 
 
+
+//    public Uri getImageUri(Context inContext, Bitmap inImage) {
+//        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+//        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+//        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+//        return Uri.parse(path);
+//    }
+//    public void uploadImageFirebase(Bitmap bitmapF){
+//
+//        final ProgressDialog pd=new ProgressDialog(getApplicationContext());
+//        pd.setMessage("Uploading");
+//        pd.show();
+//
+//        Uri imageUri= getImageUri(getApplicationContext(),bitmapF);
+//
+//        if(imageUri!=null){
+//            final StorageReference fileReference=storageReference.child(System.currentTimeMillis()+"."+getFileExtension(imageUri));
+//            uploadTask=fileReference.putFile(imageUri);
+//            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+//                @Override
+//                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+//                    if(!task.isSuccessful()){
+//                        throw task.getException();
+//                    }
+//                    return fileReference.getDownloadUrl();
+//                }
+//            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+//                @Override
+//                public void onComplete(@NonNull Task<Uri> task) {
+//                    if(task.isSuccessful()){
+//                        Uri downloadUri=task.getResult();
+//                        String mUri=downloadUri.toString();
+//
+//                        mUriTBU=mUri;
+//
+//                        //reference=FirebaseDatabase.getInstance().getReference("Chats").child(fuser.getUid());
+//
+//                        //HashMap <String ,Object>map =new HashMap<>();
+//                        //map.put("imageURL",mUri);
+//                        //reference.updateChildren(map);
+//                        Toast.makeText(MessageActivity.this," Image Selected.. Write Text and Send",Toast.LENGTH_LONG).show();///
+//
+//                        pd.dismiss();
+//                    }
+//                    else {
+//                        Toast.makeText(MessageActivity.this,"Failed..",Toast.LENGTH_SHORT).show();
+//                        pd.dismiss();
+//                    }
+//                }
+//            }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//                    Toast.makeText(MessageActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+//                    pd.dismiss();
+//
+//                }
+//            });
+//        }else{
+//            Toast.makeText(MessageActivity.this,"No Image Selected..",Toast.LENGTH_SHORT).show();
+//
+//        }
+//
+//    }
 
 
 
@@ -438,7 +519,7 @@ public class ocrActivity extends AppCompatActivity {
             billImageBitmap=thumbnail;///////////
             billImageView.setImageBitmap(thumbnail);
             saveImage(thumbnail);
-            Toast.makeText(getApplicationContext(), "Image Saved C!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Image Saved !", Toast.LENGTH_SHORT).show();
         }
     }
 

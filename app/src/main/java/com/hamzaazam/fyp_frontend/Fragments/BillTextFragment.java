@@ -127,19 +127,19 @@ public class BillTextFragment extends Fragment {
 
                 HashMap<String,Object> billText=bill.getBillText();
 
-                if(!(bill.getBillCategory().equals("-")) && bill.getBillCategory()!=null) {
+                if(bill.getBillCategory()!=null) {
                     tvBillTitle.setText(bill.getBillCategory());
                 }
-                if(!(bill.getBillAmount().equals("-")) && bill.getBillAmount()!=null) {
+                if( bill.getBillAmount()!=null) {
                     billAmount.setText(bill.getBillAmount());
                 }
-                if(!(bill.getBillDate().equals("-")) && bill.getBillDate()!=null) {
+                if(bill.getBillDate()!=null) {
                     billDate.setText(bill.getBillDate());
                 }
-                if(!(bill.getBillCustomerName().equals("-")) && bill.getBillCustomerName()!=null) {
+                if( bill.getBillCustomerName()!=null) {
                     billCustomerName.setText(bill.getBillCustomerName());
                 }
-                if(!(bill.getBillAddNote().equals("-")) && bill.getBillAddNote()!=null) {
+                if( bill.getBillAddNote()!=null) {
                     billAddNote.setText(bill.getBillAddNote());
                 }
                 if (bill.getBillCategory().equals("PTCL")){//hide units and meter no if category is ptcl

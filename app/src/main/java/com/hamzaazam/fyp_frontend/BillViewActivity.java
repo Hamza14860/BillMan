@@ -18,6 +18,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.hamzaazam.fyp_frontend.Fragments.BillImageFragment;
 import com.hamzaazam.fyp_frontend.Fragments.BillExportFragment;
 import com.hamzaazam.fyp_frontend.Fragments.BillTextFragment;
+import com.hamzaazam.fyp_frontend.Fragments.ZoomHack;
 
 import java.util.ArrayList;
 
@@ -46,7 +47,7 @@ public class BillViewActivity extends AppCompatActivity {
     void getContentFromIntent() {
         Intent intent = getIntent();
         billId=intent.getStringExtra("billid");
-        toast(billId);
+        //toast(billId);
     }
 
     @Override

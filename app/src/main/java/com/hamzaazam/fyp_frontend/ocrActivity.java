@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +24,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -38,6 +40,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -127,6 +130,8 @@ public class ocrActivity extends AppCompatActivity {
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+        storageReference= FirebaseStorage.getInstance().getReference("BillImages");
 
         ///////////
         ipv4AddressView = findViewById(R.id.IPAddress);
@@ -244,6 +249,10 @@ public class ocrActivity extends AppCompatActivity {
                     public void run() {
                         TextView responseText = findViewById(R.id.responseText);
                         responseText.setText("Failed to Connect to Server");
+                        //uploadImageFirebase(billImageBitmap);
+
+
+                        ///////////////////////////////////////
                     }
                 });
             }
@@ -260,7 +269,7 @@ public class ocrActivity extends AppCompatActivity {
                             ocrText=response.body().string();
 
                             //String converted to JSON Object
-                            JSONObject jsonText = new JSONObject(ocrText);
+                            final JSONObject jsonText = new JSONObject(ocrText);
                             Log.d("JSON_TEXT", jsonText.toString());
                             responseText.setText("Ocr Text Received");
 
@@ -278,83 +287,117 @@ public class ocrActivity extends AppCompatActivity {
                                 }
                             }
 
-
                             ////////////////////////////ADDING RECEIVED TEXT TO FIREBASE
                             //Note: View added in this func para
+                            ///////////////////////////
+                            final ProgressDialog pd=new ProgressDialog(ocrActivity.this);
+                            pd.setMessage("Uploading");
+                            pd.show();
 
-                            //enabling wifi
-                            //wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-                            //enableWifi(v);
+                            Uri imageUri= getImageUri(getApplicationContext(),billImageBitmap);
+
+                            if(imageUri!=null){
+                                final StorageReference fileReference=storageReference.child(System.currentTimeMillis()+"."+getFileExtension(imageUri));
+                                uploadTask=fileReference.putFile(imageUri);
+                                uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                                    @Override
+                                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                        if(!task.isSuccessful()){
+                                            throw task.getException();
+                                        }
+                                        return fileReference.getDownloadUrl();
+                                    }
+                                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Uri> task) {
+                                        if(task.isSuccessful()){
+                                            Uri downloadUri=task.getResult();
+                                            String mUri=downloadUri.toString();
+
+                                            mUriTBU=mUri;
+
+                                            //Upload To Firebase
+                                            try {
+                                                String fuserid=FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                                DatabaseReference reference2= FirebaseDatabase.getInstance().getReference("bills").child(fuserid);
+                                                HashMap<String ,Object> map2 =new HashMap<>();
 
 
-                            String fuserid=FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            DatabaseReference reference2= FirebaseDatabase.getInstance().getReference("bills").child(fuserid);
-                            HashMap<String ,Object> map2 =new HashMap<>();
-//                            if(profileAbout.getText()!=null) {
-//                                map2.put("about", profileAbout.getText().toString());
-//                            }
-//                            if(profileAge.getText()!=null && !(profileAge.getText().toString().equals(" ")) &&
-//                                    !(profileAge.getText().toString().equals(""))) {
-//                                map2.put("age", Integer.parseInt(profileAge.getText().toString()));
-//                            }
-//
-//                            if(listArray!=null) {
-//                                map2.put("listSportPreferences", listArray);
-//                            }
+                                                Map<String,Object> jsonMap=toMap(jsonText);
+                                                if(jsonMap.containsKey("Amount")){
+                                                    if(jsonMap.get("Amount").toString()!=null){
+                                                        map2.put("billAmount", jsonMap.get("Amount"));
+                                                    }
+                                                    else{
+                                                        map2.put("billAmount", "-");
+                                                    }
+                                                }
+                                                if(jsonMap.containsKey("Title")){
+                                                    if(jsonMap.get("Title").toString()!=null){
+                                                        map2.put("billCategory", jsonMap.get("Title"));
+                                                    }
+                                                    else{
+                                                        map2.put("billCategory", "-");
+                                                    }
+                                                }
 
-                            Map<String,Object> jsonMap=toMap(jsonText);
-                            if(jsonMap.containsKey("Amount")){
-                                if(jsonMap.get("Amount").toString()!=null){
-                                    map2.put("billAmount", jsonMap.get("Amount"));
-                                }
-                                else{
-                                    map2.put("billAmount", "-");
-                                }
+                                                if(jsonMap.containsKey("Name")){
+                                                    if(jsonMap.get("Name").toString()!=null){
+                                                        map2.put("billCustomerName", jsonMap.get("Name"));
+                                                    }
+                                                    else{
+                                                        map2.put("billCustomerName", "-");
+                                                    }
+                                                }
+                                                if(jsonMap.containsKey("Date")){
+                                                    if(jsonMap.get("Date").toString()!=null){
+                                                        map2.put("billDate", jsonMap.get("Date"));
+                                                    }
+                                                    else{
+                                                        map2.put("billDate", "-");
+                                                    }
+                                                }
+                                                map2.put("billAddNote", "-");
+                                                //TODO: SET IMAGE URL
+
+                                                ////
+                                                // uploadImageFirebase(billImageBitmap);
+                                                map2.put("billImageUrl", mUri);
+                                                /////
+                                                map2.put("billText", jsonMap);
+                                                reference2.push().setValue(map2);
+                                                Toasty.success(getApplicationContext(), "Bill Added Successfully!", Toast.LENGTH_LONG, true).show();
+
+
+                                            }
+                                            catch (Exception e){
+                                                Toast.makeText(ocrActivity.this,"Exception Writing to Firebase",Toast.LENGTH_LONG).show();///
+                                            }
+
+                                            //Toast.makeText(ocrActivity.this," Image Uploaded",Toast.LENGTH_LONG).show();///
+
+                                            pd.dismiss();
+                                        }
+                                        else {
+                                            Toast.makeText(ocrActivity.this,"Failed..",Toast.LENGTH_SHORT).show();
+                                            pd.dismiss();
+                                        }
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(ocrActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                                        pd.dismiss();
+
+                                    }
+                                });
+                            }else{
+                                Toast.makeText(ocrActivity.this,"No Image Selected..",Toast.LENGTH_SHORT).show();
+
                             }
-                            if(jsonMap.containsKey("Title")){
-                                if(jsonMap.get("Title").toString()!=null){
-                                    map2.put("billCategory", jsonMap.get("Title"));
-                                }
-                                else{
-                                    map2.put("billCategory", "-");
-                                }
-                            }
-
-                            if(jsonMap.containsKey("Name")){
-                                if(jsonMap.get("Name").toString()!=null){
-                                    map2.put("billCustomerName", jsonMap.get("Name"));
-                                }
-                                else{
-                                    map2.put("billCustomerName", "-");
-                                }
-                            }
-                            if(jsonMap.containsKey("Date")){
-                                if(jsonMap.get("Date").toString()!=null){
-                                    map2.put("billDate", jsonMap.get("Date"));
-                                }
-                                else{
-                                    map2.put("billDate", "-");
-                                }
-                            }
-
-                            map2.put("billAddNote", "-");
-
-                            //TODO: SET IMAGE URL
 
 
-                            ////
-                            // uploadImageFirebase(billImageBitmap);
-                            map2.put("billImageUrl", "None Chosen");
-
-                            /////
-
-                            map2.put("billText", jsonMap);
-
-                            reference2.push().setValue(map2);
-
-
-                            Toasty.success(getApplicationContext(), "Bill Added Successfully!", Toast.LENGTH_LONG, true).show();
-
+                            ///////////////////////////
 
 
                             ////////////////////////////
@@ -375,7 +418,6 @@ public class ocrActivity extends AppCompatActivity {
             }
         });
 
-
         /////////1
         ////////
 
@@ -383,15 +425,25 @@ public class ocrActivity extends AppCompatActivity {
 
 
 
-//    public Uri getImageUri(Context inContext, Bitmap inImage) {
-//        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-//        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-//        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-//        return Uri.parse(path);
-//    }
+    StorageReference storageReference;
+    private StorageTask uploadTask;
+    String mUriTBU;
+
+    private String getFileExtension(Uri uri){
+        ContentResolver contentResolver=ocrActivity.this.getContentResolver();
+        MimeTypeMap mimeTypeMap=MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+//
 //    public void uploadImageFirebase(Bitmap bitmapF){
 //
-//        final ProgressDialog pd=new ProgressDialog(getApplicationContext());
+//        final ProgressDialog pd=new ProgressDialog(ocrActivity.this);
 //        pd.setMessage("Uploading");
 //        pd.show();
 //
@@ -417,30 +469,26 @@ public class ocrActivity extends AppCompatActivity {
 //
 //                        mUriTBU=mUri;
 //
-//                        //reference=FirebaseDatabase.getInstance().getReference("Chats").child(fuser.getUid());
 //
-//                        //HashMap <String ,Object>map =new HashMap<>();
-//                        //map.put("imageURL",mUri);
-//                        //reference.updateChildren(map);
-//                        Toast.makeText(MessageActivity.this," Image Selected.. Write Text and Send",Toast.LENGTH_LONG).show();///
+//                        Toast.makeText(ocrActivity.this," Image Uploaded",Toast.LENGTH_LONG).show();///
 //
 //                        pd.dismiss();
 //                    }
 //                    else {
-//                        Toast.makeText(MessageActivity.this,"Failed..",Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(ocrActivity.this,"Failed..",Toast.LENGTH_SHORT).show();
 //                        pd.dismiss();
 //                    }
 //                }
 //            }).addOnFailureListener(new OnFailureListener() {
 //                @Override
 //                public void onFailure(@NonNull Exception e) {
-//                    Toast.makeText(MessageActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(ocrActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
 //                    pd.dismiss();
 //
 //                }
 //            });
 //        }else{
-//            Toast.makeText(MessageActivity.this,"No Image Selected..",Toast.LENGTH_SHORT).show();
+//            Toast.makeText(ocrActivity.this,"No Image Selected..",Toast.LENGTH_SHORT).show();
 //
 //        }
 //

@@ -55,7 +55,7 @@ public class BillsAdapter extends RecyclerView.Adapter<BillsAdapter.BillsViewHol
 
         billImageurl=category.getBillImageUrl();
 
-        if(billImageurl ==null || billImageurl.equals("None Chosen")){
+        if(billImageurl == null || billImageurl.equals("None Chosen")){
             holder.billImage.setImageResource(R.mipmap.bill1);
         }
         else{

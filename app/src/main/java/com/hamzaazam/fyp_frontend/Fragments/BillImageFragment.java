@@ -88,7 +88,9 @@ public class BillImageFragment extends Fragment {
                     billImageView.setImageResource(R.mipmap.bill1);
                 }
                 else{
-                    Glide.with(vieww.getContext()).load(bill.getBillImageUrl()).into(billImageView);
+                    if (isAdded()) {
+                        Glide.with(getActivity().getApplicationContext()).load(bill.getBillImageUrl()).into(billImageView);
+                    }
                 }
                 /////////
             }

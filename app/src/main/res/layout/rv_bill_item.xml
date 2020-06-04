@@ -29,6 +29,7 @@
                 android:id="@+id/billImageItem"
                 android:layout_width="100sp"
                 android:layout_height="100sp"
+                android:padding="@dimen/inner_components_spacing"
                 android:src="@drawable/bill1" />
 
             <LinearLayout

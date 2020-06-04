@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AddExpenseActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal">
+        <TextView
+            android:padding="10dp"
+            android:textColor="#fff"
+            android:layout_weight="3"
+            android:id="@+id/title_dialog"
+            android:text="Add Expense"
+            android:textSize="15sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <ImageButton
+            android:layout_marginRight="5dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/exitAct"
+            android:src="@drawable/ic_close_white_24dp"
+            android:backgroundTint="@color/Transparent"
+            android:layout_gravity="center_vertical"
+            />
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:orientation="vertical"
+            android:layout_margin="25dp">
+
+
+            <TextView
+                android:textAlignment="center"
+                android:text="Date of Purchase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+            <DatePicker
+                android:id="@+id/datePicker1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:datePickerMode="spinner"
+                android:calendarViewShown="false"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_marginTop="15dp"
+                android:hint="Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:id="@+id/itemName"/>
+
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="Category"
+                android:id="@+id/itemCategory"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Amount"
+                android:inputType="number"
+                android:id="@+id/itemAmount"/>
+
+
+
+
+<!--            <com.rengwuxian.materialedittext.MaterialEditText-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="Date of Purchase"-->
+<!--                android:inputType="date"-->
+<!--                android:id="@+id/itemDate"/>-->
+
+
+
+            <Button
+                android:background="@drawable/capsule_green"
+                android:id="@+id/btnAddExpense"
+                android:text="Add Item"
+                android:paddingHorizontal="50dp"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:id="@+id/tvErrorAdding"
+                android:textColor="@color/errorColor"/>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>

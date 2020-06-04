@@ -1,15 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.OtherDocsFragment"
-    android:background="@drawable/backwall6">
+    tools:context=".Fragments.ExpensesFragment"
+    android:background="@drawable/backwall6"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:focusableInTouchMode="true"
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    >
+
+
+    <EditText
+        android:drawableRight="@drawable/ic_search_black_24dp"
+        android:padding="10dp"
+
+        android:singleLine="true"
+        android:textColorHint="@color/darkgrey_gn"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="5dp"
+        android:hint="Search By Date (eg June 1, 2020)..."
+        android:textSize="15dp"
+        android:id="@+id/searchExpenses"
+        android:background="@drawable/sansi_edittext"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="1dp"
+        android:layout_below="@id/searchExpenses"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="xx" />
+        android:id="@+id/recyclerViewExpenses"/>
 
-</FrameLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:src="@drawable/ic_add_white"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/create_expense_button"
+        app:elevation="0dp"
+        />
+
+    <FrameLayout
+        android:id="@+id/child_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>

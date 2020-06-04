@@ -28,8 +28,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hamzaazam.fyp_frontend.Fragments.HelpFragment;
-import com.hamzaazam.fyp_frontend.Fragments.OcrReceiptsFragment;
-import com.hamzaazam.fyp_frontend.Fragments.OtherDocsFragment;
+import com.hamzaazam.fyp_frontend.Fragments.ExpensesFragment;
 import com.hamzaazam.fyp_frontend.Fragments.ProfileFragment;
 
 import java.util.HashMap;
@@ -120,21 +119,21 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                                 new HomeFragment()).addToBackStack(null).commit();
                         break;
-                    case R.id.nav_players:
-                        getSupportActionBar().setTitle(" OCR Receipts ");
-
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                new OcrReceiptsFragment()).addToBackStack(null).commit();
-                        break;
+//                    case R.id.nav_players:
+//                        getSupportActionBar().setTitle(" OCR Receipts ");
+//
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+//                                new OcrReceiptsFragment()).addToBackStack(null).commit();
+//                        break;
                     case R.id.nav_profile:
                         getSupportActionBar().setTitle(" Profile ");
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                                 new ProfileFragment()).addToBackStack(null).commit();
                         break;
                     case R.id.nav_events:
-                        getSupportActionBar().setTitle(" Other Docs ");
+                        getSupportActionBar().setTitle(" Expenses ");
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                new OtherDocsFragment()).addToBackStack(null).commit();
+                                new ExpensesFragment()).addToBackStack(null).commit();
                         break;
                     case R.id.nav_help:
                         getSupportActionBar().setTitle(" Help ");

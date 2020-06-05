@@ -3,6 +3,7 @@ package com.hamzaazam.fyp_frontend.Adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,106 +28,159 @@ import com.hamzaazam.fyp_frontend.R;
 import java.io.Console;
 import java.util.List;
 
-public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseViewHolder> {
+public class ExpenseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-private Context mContext;
-private List<ExpenseM> mExpenses;
-DatabaseReference reference;
+    private Context mContext;
+    private List<ExpenseM> mExpenses;
+    DatabaseReference reference;
 
-String fuserid;
+    String fuserid;
 
-private Fragment frag;
+    private Fragment frag;
 
-public ExpenseAdapter(Context context, List<ExpenseM>  expensesList){
+    private static final int TYPE_HEADER = 0;
+    private static final int TYPE_ITEM = 1;
+
+    public ExpenseAdapter(Context context, List<ExpenseM>  expensesList){
         this.mContext=context;
         this.mExpenses=expensesList;
         fuserid= FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         //frag=cont;
-}
+    }
 
-@NonNull
-@Override
-public ExpenseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-    View view= LayoutInflater.from(mContext).inflate(R.layout.rv_expense_item,parent, false);
-    return new ExpenseAdapter.ExpenseViewHolder(view);
-}
+    @NonNull
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//        View view= LayoutInflater.from(mContext).inflate(R.layout.rv_expense_item,parent, false);
+//        return new ExpenseAdapter.ExpenseViewHolder(view);
 
-@Override
-public void onBindViewHolder(@NonNull ExpenseViewHolder holder, final int position) {
-
-    final ExpenseM expense = mExpenses.get(position);
-    holder.expenseItem.setText(expense.getExpenseItem());
-    holder.expenseCategory.setText(expense.getExpenseCategory());
-    holder.expenseDate.setText(expense.getExpenseDate());
-    holder.expenseAmount.setText(expense.getExpenseAmount());
-
-    holder.itemView.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-//            Intent intent=new Intent(mContext, BillViewActivity.class);
-//            intent.putExtra("billid",mBills.get(position).getBillId());
-//            mContext.startActivity(intent);
-
-            new AlertDialog.Builder(view.getContext())
-                    .setTitle("Delete entry")
-                    .setMessage("Are you sure you want to delete this entry?")
-
-                    // Specifying a listener allows you to take an action before dismissing the dialog.
-                    // The dialog is automatically dismissed when a dialog button is clicked.
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Continue with delete operation
-                            try{
-                                reference = FirebaseDatabase.getInstance().getReference("expenses").child(fuserid);
-                                reference.child(expense.getExpenseId()).removeValue();
-                            }
-                            catch (Exception e){
-                                System.out.println(e.getLocalizedMessage());
-                            }
-                        }
-                    })
-
-                    // A null listener allows the button to dismiss the dialog and take no further action.
-                    .setNegativeButton(android.R.string.no, null)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
-
+        if (viewType == TYPE_HEADER) {
+            View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_expense_header, parent, false);
+            return new HeaderViewHolder(layoutView);
+        } else if (viewType == TYPE_ITEM) {
+            View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_expense_item, parent, false);
+            return new ExpenseViewHolder(layoutView);
         }
-    });
+        throw new RuntimeException("No match for " + viewType + ".");
+    }
 
-    Animation animation= AnimationUtils.loadAnimation(mContext,android.R.anim.slide_in_left);
-    holder.itemView.startAnimation(animation);
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
+        final ExpenseM expense = mExpenses.get(position);
+        if(holder instanceof HeaderViewHolder){
+            Log.e("ADAPTER BIND","HEADER");
 
+            ((HeaderViewHolder) holder).headerTitle.setText(expense.getExpenseCategory());
+            expense.setHeader(true);
+        }
+        else if(holder instanceof ExpenseViewHolder){
 
-}
+            ((ExpenseViewHolder) holder).expenseItem.setText(expense.getExpenseItem());
+            ((ExpenseViewHolder) holder).expenseCategory.setText(expense.getExpenseCategory());
+            ((ExpenseViewHolder) holder).expenseDate.setText(expense.getExpenseDate());
+            ((ExpenseViewHolder) holder).expenseAmount.setText(expense.getExpenseAmount());
 
-@Override
-public int getItemCount() {
-        return mExpenses.size();
-}
+            ((ExpenseViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    new AlertDialog.Builder(view.getContext())
+                            .setTitle("Delete entry")
+                            .setMessage("Are you sure you want to delete this entry?")
 
-public class ExpenseViewHolder extends RecyclerView.ViewHolder{
-    public TextView expenseItem;
-    public TextView expenseDate;
-    public TextView expenseAmount;
-    public TextView expenseCategory;
+                            // Specifying a listener allows you to take an action before dismissing the dialog.
+                            // The dialog is automatically dismissed when a dialog button is clicked.
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // Continue with delete operation
+                                    try{
+                                        reference = FirebaseDatabase.getInstance().getReference("expenses").child(fuserid);
+                                        reference.child(expense.getExpenseId()).removeValue();
+                                    }
+                                    catch (Exception e){
+                                        System.out.println(e.getLocalizedMessage());
+                                    }
+                                }
+                            })
 
+                            // A null listener allows the button to dismiss the dialog and take no further action.
+                            .setNegativeButton(android.R.string.no, null)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                }
+            });
+        }
 
-
-
-
-    public ExpenseViewHolder( View itemView) {
-        super(itemView);
-
-        expenseItem = itemView.findViewById(R.id.expenseNameItem);
-        expenseDate = itemView.findViewById(R.id.expenseDateItem);
-        expenseAmount = itemView.findViewById(R.id.expenseAmountItem);
-        expenseCategory = itemView.findViewById(R.id.expenseCategoryItem);
+        Animation animation= AnimationUtils.loadAnimation(mContext,android.R.anim.slide_in_left);
+        holder.itemView.startAnimation(animation);
 
 
     }
-}
+    private ExpenseM getItem(int position) {
+        return mExpenses.get(position);
+    }
+    @Override
+    public int getItemCount() {
+        return mExpenses.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+//        if (isPositionHeader(position))
+//            return TYPE_HEADER;
+//        return TYPE_ITEM;
+        Log.e("ADAPTER",mExpenses.get(position).getHeader().toString());
+        if(mExpenses.get(position).getHeader() == true){
+            return TYPE_ITEM;
+        }
+        else {
+            //mExpenses.get(position).setHeader(true);
+            return TYPE_HEADER;
+        }
+
+//        switch (mExpenses.get(position).ge) {
+//            case 0:
+//                return Model.TEXT_TYPE;
+//            case 1:
+//                return Model.IMAGE_TYPE;
+//            case 2:
+//                return Model.AUDIO_TYPE;
+//            default:
+//                return -1;
+//        }
+    }
+    private boolean isPositionHeader(int position) {
+        return position == 0;
+    }
+
+    public class ExpenseViewHolder extends RecyclerView.ViewHolder{
+        public TextView expenseItem;
+        public TextView expenseDate;
+        public TextView expenseAmount;
+        public TextView expenseCategory;
+
+
+
+
+
+        public ExpenseViewHolder( View itemView) {
+            super(itemView);
+
+            expenseItem = itemView.findViewById(R.id.expenseNameItem);
+            expenseDate = itemView.findViewById(R.id.expenseDateItem);
+            expenseAmount = itemView.findViewById(R.id.expenseAmountItem);
+            expenseCategory = itemView.findViewById(R.id.expenseCategoryItem);
+
+
+        }
+    }
+
+    public class HeaderViewHolder extends RecyclerView.ViewHolder{
+        public TextView headerTitle;
+        public HeaderViewHolder(View itemView) {
+            super(itemView);
+            headerTitle = (TextView)itemView.findViewById(R.id.header_id);
+        }
+    }
 }
 

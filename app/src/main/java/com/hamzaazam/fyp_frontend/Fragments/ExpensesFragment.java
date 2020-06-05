@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -56,6 +57,7 @@ public class ExpensesFragment extends Fragment {
 
     String fuserid;//current user logged in
 
+    List expenseCategories = new ArrayList<String>();
 
     public ExpensesFragment() {
         // Required empty public constructor
@@ -91,17 +93,31 @@ public class ExpensesFragment extends Fragment {
         pDialog = new ProgressDialog(getContext());
         pDialog.setMessage("Loading Expenses");
         pDialog.show();
-        reference = FirebaseDatabase.getInstance().getReference("expenses").child(fuserid);
-        reference.addValueEventListener(new ValueEventListener() {
+        Query myTopPostsQuery = FirebaseDatabase.getInstance().getReference("expenses").child(fuserid).orderByChild("expenseCategory");
+        myTopPostsQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 expenseMList.clear();
+                expenseCategories.clear();
+
                 for(DataSnapshot expense : dataSnapshot.getChildren()){
                     ExpenseM e = expense.getValue(ExpenseM.class);
 
-                        e.setExpenseId(expense.getKey());
+                    if (!expenseCategories.contains(e.getExpenseCategory())){
+                        Log.e("ERROR EXPENSE",e.getExpenseCategory());
+                        e.setHeader(false);
+                        expenseCategories.add(e.getExpenseCategory());
                         expenseMList.add(e);
                         expenseAdapter.notifyDataSetChanged();
+
+
+                    }
+//                    e.setHeader(true);
+                    e.setExpenseId(expense.getKey());
+                    expenseMList.add(e);
+                    expenseAdapter.notifyDataSetChanged();
+
+
                     pDialog.hide();
                 }
             }

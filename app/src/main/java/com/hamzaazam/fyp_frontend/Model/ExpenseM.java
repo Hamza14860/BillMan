@@ -8,6 +8,8 @@ public class ExpenseM {
     public String expenseAmount;
     public String expenseCategory;
 
+    public Boolean isHeader = true;// After first time this category is found it will become false
+
     public ExpenseM(){}
 
     public ExpenseM( String expenseItem, String expenseDate, String expenseAmount, String expenseCategory) {
@@ -55,5 +57,13 @@ public class ExpenseM {
 
     public void setExpenseCategory(String expenseCategory) {
         this.expenseCategory = expenseCategory;
+    }
+
+    public Boolean getHeader() {
+        return isHeader;
+    }
+
+    public void setHeader(Boolean header) {
+        isHeader = header;
     }
 }

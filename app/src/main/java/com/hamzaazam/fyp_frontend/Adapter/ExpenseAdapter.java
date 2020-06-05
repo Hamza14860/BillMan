@@ -1,6 +1,7 @@
 package com.hamzaazam.fyp_frontend.Adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,28 +10,37 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.hamzaazam.fyp_frontend.BillViewActivity;
 import com.hamzaazam.fyp_frontend.Model.ExpenseM;
 import com.hamzaazam.fyp_frontend.R;
 
+import java.io.Console;
 import java.util.List;
 
 public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseViewHolder> {
 
 private Context mContext;
 private List<ExpenseM> mExpenses;
+DatabaseReference reference;
 
+String fuserid;
 
 private Fragment frag;
 
 public ExpenseAdapter(Context context, List<ExpenseM>  expensesList){
         this.mContext=context;
         this.mExpenses=expensesList;
+        fuserid= FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         //frag=cont;
 }
@@ -58,6 +68,30 @@ public void onBindViewHolder(@NonNull ExpenseViewHolder holder, final int positi
 //            Intent intent=new Intent(mContext, BillViewActivity.class);
 //            intent.putExtra("billid",mBills.get(position).getBillId());
 //            mContext.startActivity(intent);
+
+            new AlertDialog.Builder(view.getContext())
+                    .setTitle("Delete entry")
+                    .setMessage("Are you sure you want to delete this entry?")
+
+                    // Specifying a listener allows you to take an action before dismissing the dialog.
+                    // The dialog is automatically dismissed when a dialog button is clicked.
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Continue with delete operation
+                            try{
+                                reference = FirebaseDatabase.getInstance().getReference("expenses").child(fuserid);
+                                reference.child(expense.getExpenseId()).removeValue();
+                            }
+                            catch (Exception e){
+                                System.out.println(e.getLocalizedMessage());
+                            }
+                        }
+                    })
+
+                    // A null listener allows the button to dismiss the dialog and take no further action.
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
 
         }
     });

@@ -23,90 +23,90 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/expenseCategoryItem"
+                android:text="Food"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="13sp"
+                android:background="@color/colorPrimary"
+                android:textAlignment="center"
+                />
+
+            <LinearLayout
+                android:layout_marginTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvExpenseItem"
+                    android:text="Item Name: "
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/expenseCategoryItem"
-                    android:text="Food"
-                    android:textColor="@color/white"
+                    android:id="@+id/expenseNameItem"
+                    android:layout_marginLeft="5dp"
+                    android:text=" Mcdonalds"
+                    android:textSize="13sp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvExpenseAmount"
+                    android:text="Item Amount: "
                     android:textStyle="bold"
                     android:textSize="13sp"
-                    android:background="@color/colorPrimary"
-                    android:textAlignment="center"
                     />
-
-                <LinearLayout
-                    android:layout_marginTop="4dp"
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/tvExpenseItem"
-                        android:text="Item Name: "
-                        android:textStyle="bold"
-                        android:textSize="13sp"
-                        />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/expenseNameItem"
-                        android:layout_marginLeft="5dp"
-                        android:text=" Mcdonalds"
-                        android:textSize="13sp"
-                        />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginTop="4dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/tvExpenseAmount"
-                        android:text="Item Amount: "
-                        android:textStyle="bold"
-                        android:textSize="13sp"
-                        />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/expenseAmountItem"
-                        android:layout_marginLeft="5dp"
-                        android:text="850"
-                        android:textSize="13sp"
-                        />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginTop="4dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/tvExpenseDate"
-                        android:text="Purchase Date: "
-                        android:textStyle="bold"
-                        android:textSize="13sp"
-                        />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/expenseDateItem"
-                        android:layout_marginLeft="5dp"
-                        android:text="January 1,2020"
-                        android:textSize="13sp"
-                        />
-                </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/expenseAmountItem"
+                    android:layout_marginLeft="5dp"
+                    android:text="850"
+                    android:textSize="13sp"
+                    />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvExpenseDate"
+                    android:text="Purchase Date: "
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/expenseDateItem"
+                    android:layout_marginLeft="5dp"
+                    android:text="January 1,2020"
+                    android:textSize="13sp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
 
 
     </androidx.cardview.widget.CardView>

@@ -40,7 +40,7 @@ public class AddExpenseActivity extends AppCompatActivity {
 
     String fuserid;//current user logged in
 
-    public static final String[] MONTHS = {"January", "Febuar", "March", "April", "May", "June", "July", "August", "September", "October", "Novembe", "December"};
+    public static final String[] MONTHS = {"January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "Novembe", "December"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

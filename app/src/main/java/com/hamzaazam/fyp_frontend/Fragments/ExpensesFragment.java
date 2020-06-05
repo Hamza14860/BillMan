@@ -18,6 +18,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -38,6 +40,7 @@ import com.hamzaazam.fyp_frontend.R;
 import com.hamzaazam.fyp_frontend.ocrActivity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -59,6 +62,12 @@ public class ExpensesFragment extends Fragment {
 
     List expenseCategories = new ArrayList<String>();
 
+
+
+    DatePicker dpExpense;
+    EditText totalExpense;
+    public static final String[] MONTHS = {"January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "Novembe", "December"};
+
     public ExpensesFragment() {
         // Required empty public constructor
     }
@@ -74,6 +83,10 @@ public class ExpensesFragment extends Fragment {
         ////////////
 
         addExpensebutton = view.findViewById(R.id.create_expense_button);
+
+        totalExpense = view.findViewById(R.id.totalExpense);
+        dpExpense = view.findViewById(R.id.dpExpense);
+
 
         search_bar = view.findViewById(R.id.searchExpenses);
 
@@ -182,6 +195,44 @@ public class ExpensesFragment extends Fragment {
             }
         });
 
+
+
+        ///DATE PICKER LISTENER
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        dpExpense.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
+
+            @Override
+            public void onDateChanged(DatePicker datePicker, final int year, final int month, int dayOfMonth) {
+                Log.e("Date", "Year=" + year + " Month=" + (month + 1) + " day=" + dayOfMonth);
+                reference = FirebaseDatabase.getInstance().getReference("expenses").child(fuserid);
+                reference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        int sumTemp = 0;
+                        for(DataSnapshot expense : dataSnapshot.getChildren()){
+                            ExpenseM e = expense.getValue(ExpenseM.class);
+
+                            if (e.getExpenseDate().toString().contains(String.valueOf(year)) && e.getExpenseDate().contains(MONTHS[month])){
+
+                                sumTemp+=Integer.parseInt(e.getExpenseAmount());
+                            }
+                        }
+                        totalExpense.setText(String.valueOf(sumTemp));
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+            }
+        });
+
+//        dpExpense.getCalendarView().setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+//            @Override
+//            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+//                Log.d("tag", "finally found the listener, the date is: year " + year + ", month "  + month + ", dayOfMonth " + dayOfMonth);
+//            }
+//        });
 
 
         return view;

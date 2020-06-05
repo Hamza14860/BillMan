@@ -2,8 +2,10 @@ package com.hamzaazam.fyp_frontend.Adapter;
 
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.hamzaazam.fyp_frontend.BillViewActivity;
 import com.hamzaazam.fyp_frontend.Model.BillM;
 import com.hamzaazam.fyp_frontend.R;
@@ -28,9 +33,15 @@ public class BillsAdapter extends RecyclerView.Adapter<BillsAdapter.BillsViewHol
 
     String billImageurl;
 
+    DatabaseReference reference;
+
+    String fuserid;
+
     public BillsAdapter(Context context, List<BillM>  billsList){
         this.mContext=context;
         this.mBills=billsList;
+        fuserid= FirebaseAuth.getInstance().getCurrentUser().getUid();
+
 
     }
 
@@ -85,6 +96,36 @@ public class BillsAdapter extends RecyclerView.Adapter<BillsAdapter.BillsViewHol
                     intent.putExtra("billid",mBills.get(position).getBillId());
                     mContext.startActivity(intent);
 
+            }
+        });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                new AlertDialog.Builder(view.getContext())
+                        .setTitle("Delete Bill")
+                        .setMessage("Are you sure you want to delete this bill?")
+
+                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                        // The dialog is automatically dismissed when a dialog button is clicked.
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Continue with delete operation
+                                try{
+                                    reference = FirebaseDatabase.getInstance().getReference("bills").child(fuserid);
+                                    reference.child(category.getBillId()).removeValue();
+                                }
+                                catch (Exception e){
+                                    System.out.println(e.getLocalizedMessage());
+                                }
+                            }
+                        })
+
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                return true;
             }
         });
 

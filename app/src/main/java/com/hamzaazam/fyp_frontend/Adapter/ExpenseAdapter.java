@@ -69,10 +69,10 @@ public class ExpenseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         final ExpenseM expense = mExpenses.get(position);
         if(holder instanceof HeaderViewHolder){
-            Log.e("ADAPTER BIND","HEADER");
+            //Log.e("ADAPTER BIND","HEADER");
 
             ((HeaderViewHolder) holder).headerTitle.setText(expense.getExpenseCategory());
-            expense.setHeader(true);
+            //expense.setHeader(true);
         }
         else if(holder instanceof ExpenseViewHolder){
 
@@ -129,7 +129,8 @@ public class ExpenseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 //        if (isPositionHeader(position))
 //            return TYPE_HEADER;
 //        return TYPE_ITEM;
-        Log.e("ADAPTER",mExpenses.get(position).getHeader().toString());
+
+        //Log.e("ADAPTER",mExpenses.get(position).getHeader().toString());
         if(mExpenses.get(position).getHeader() == true){
             return TYPE_ITEM;
         }
@@ -138,16 +139,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return TYPE_HEADER;
         }
 
-//        switch (mExpenses.get(position).ge) {
-//            case 0:
-//                return Model.TEXT_TYPE;
-//            case 1:
-//                return Model.IMAGE_TYPE;
-//            case 2:
-//                return Model.AUDIO_TYPE;
-//            default:
-//                return -1;
-//        }
+
     }
     private boolean isPositionHeader(int position) {
         return position == 0;

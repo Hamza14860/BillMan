@@ -102,7 +102,7 @@ public class ExpensesFragment extends Fragment {
 
 
 
-        //Populating Category list
+        //Populating Expense list
         pDialog = new ProgressDialog(getContext());
         pDialog.setMessage("Loading Expenses");
         pDialog.show();
@@ -112,23 +112,38 @@ public class ExpensesFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 expenseMList.clear();
                 expenseCategories.clear();
+                Log.e("DATA REFRESHED","DATA REFRESHED");
 
                 for(DataSnapshot expense : dataSnapshot.getChildren()){
                     ExpenseM e = expense.getValue(ExpenseM.class);
 
                     if (!expenseCategories.contains(e.getExpenseCategory())){
-                        Log.e("ERROR EXPENSE",e.getExpenseCategory());
+                        //Log.e("ERROR EXPENSE",e.getExpenseCategory());
                         e.setHeader(false);
                         expenseCategories.add(e.getExpenseCategory());
                         expenseMList.add(e);
                         expenseAdapter.notifyDataSetChanged();
 
+                        for(DataSnapshot expenseItems: dataSnapshot.getChildren()){
+                            ExpenseM eI = expenseItems.getValue(ExpenseM.class);
+                            //Log.e("CATEOGIRES: ",eI.getExpenseCategory()+" "+e.getExpenseCategory());
+
+                            if (eI.getExpenseCategory().equals(e.getExpenseCategory()) ) {
+                                //Log.e("EXPENSE ITEM",eI.getExpenseItem());
+
+                                eI.setExpenseId(expenseItems.getKey());
+                                expenseMList.add(eI);
+                                expenseAdapter.notifyDataSetChanged();
+                            }
+
+                        }
+
 
                     }
 //                    e.setHeader(true);
-                    e.setExpenseId(expense.getKey());
-                    expenseMList.add(e);
-                    expenseAdapter.notifyDataSetChanged();
+//                    e.setExpenseId(expense.getKey());
+//                    expenseMList.add(e);
+//                    expenseAdapter.notifyDataSetChanged();
 
 
                     pDialog.hide();

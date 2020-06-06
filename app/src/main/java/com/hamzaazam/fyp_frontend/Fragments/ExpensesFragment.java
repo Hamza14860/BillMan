@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -63,6 +65,9 @@ public class ExpensesFragment extends Fragment {
     List expenseCategories = new ArrayList<String>();
 
 
+    ImageButton btnHideCV;
+    ImageButton btnShowCV;
+    CardView expenseCV;
 
     DatePicker dpExpense;
     EditText totalExpense;
@@ -95,6 +100,10 @@ public class ExpensesFragment extends Fragment {
         recyclerViewExpense.setLayoutManager(new LinearLayoutManager(getContext()));
 
         expenseMList=new ArrayList<>();
+
+        expenseCV = view.findViewById(R.id.cvExpense);
+        btnHideCV = view.findViewById(R.id.btnHideCV);
+        btnShowCV = view.findViewById(R.id.btnShowCV);
 
 
         //////////////
@@ -170,7 +179,7 @@ public class ExpensesFragment extends Fragment {
         });
 
 
-
+        //SEARCH BAR
         search_bar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -188,9 +197,7 @@ public class ExpensesFragment extends Fragment {
         });
 
 
-
-
-
+        //MOTION EVENT
         recyclerViewExpense.setOnTouchListener(new View.OnTouchListener() {
 
             public boolean onTouch(View v, MotionEvent event) {
@@ -242,12 +249,23 @@ public class ExpensesFragment extends Fragment {
             }
         });
 
-//        dpExpense.getCalendarView().setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-//            @Override
-//            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-//                Log.d("tag", "finally found the listener, the date is: year " + year + ", month "  + month + ", dayOfMonth " + dayOfMonth);
-//            }
-//        });
+
+        //HIDE CARD VIEW EXPENSE
+        btnHideCV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                expenseCV.setVisibility(View.GONE);
+                btnShowCV.setVisibility(View.VISIBLE);
+            }
+        });
+        //SHOW CARD VIEW EXPENSE
+        btnShowCV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                expenseCV.setVisibility(View.VISIBLE);
+                btnShowCV.setVisibility(View.GONE);
+            }
+        });
 
 
         return view;

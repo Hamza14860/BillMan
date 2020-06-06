@@ -79,7 +79,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 //                ft.commit();
 
 
-                ((AppCompatActivity) mContext).getSupportActionBar().setTitle(category.getCatName()+" OCR Bills");
+                ((AppCompatActivity) mContext).getSupportActionBar().setTitle(category.getCatName()+" Bills");
 
                 AllBillsFragment fragmentB = new AllBillsFragment();
                 Bundle args = new Bundle();

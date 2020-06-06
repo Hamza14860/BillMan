@@ -126,7 +126,7 @@ public class ocrActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(" OCR BILL");
+        getSupportActionBar().setTitle(" SCAN BILL");
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

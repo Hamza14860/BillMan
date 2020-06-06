@@ -36,7 +36,7 @@
                     android:layout_gravity="right"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="View OCR Text"
+                    android:text="Scanned Text"
                     android:id="@+id/btnSeeText"/>
 
             </androidx.appcompat.widget.Toolbar>
@@ -138,7 +138,7 @@
             android:layout_marginRight="40dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Connect And Send to Server"
+            android:text="Process Image"
             android:onClick="connectServer"/>
 
         <TextView

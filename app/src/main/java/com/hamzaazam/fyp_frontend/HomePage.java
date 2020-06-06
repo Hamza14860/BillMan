@@ -74,7 +74,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
         toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(" OCR Bill Categories ");
+        getSupportActionBar().setTitle(" Bill Management");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawer = findViewById(R.id.drawer_layout);
         navigationView.setNavigationItemSelectedListener(this);//to keep code clear we passed this, and implemented the method
@@ -115,7 +115,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 // update the main content by replacing fragments
                 switch (item.getItemId()) {
                     case R.id.nav_home:
-                        getSupportActionBar().setTitle(" OCR Bill Categories ");
+                        getSupportActionBar().setTitle(" Bill Management ");
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                                 new HomeFragment()).addToBackStack(null).commit();
                         break;
@@ -131,7 +131,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                                 new ProfileFragment()).addToBackStack(null).commit();
                         break;
                     case R.id.nav_events:
-                        getSupportActionBar().setTitle(" Expenses ");
+                        getSupportActionBar().setTitle(" Expense Management ");
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                                 new ExpensesFragment()).addToBackStack(null).commit();
                         break;

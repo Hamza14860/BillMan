@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -42,6 +43,8 @@ public class HomehFragment extends Fragment {
         btnBillMan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Bill Management");
+
                 Fragment newFragment = new BillmanFragment();
                 // consider using Java coding conventions (upper first char class names!!!)
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -59,6 +62,8 @@ public class HomehFragment extends Fragment {
         btnExpMan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Expense Management");
+
                 Fragment newFragment = new ExpensesFragment();
                 // consider using Java coding conventions (upper first char class names!!!)
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();

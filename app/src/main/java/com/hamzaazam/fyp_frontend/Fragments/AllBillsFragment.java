@@ -1,9 +1,7 @@
 package com.hamzaazam.fyp_frontend.Fragments;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -16,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,7 +31,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.hamzaazam.fyp_frontend.Adapter.BillsAdapter;
-import com.hamzaazam.fyp_frontend.HomeFragment;
 import com.hamzaazam.fyp_frontend.Model.BillM;
 import com.hamzaazam.fyp_frontend.R;
 import com.hamzaazam.fyp_frontend.ViewStatsActivity;
@@ -212,7 +208,7 @@ public class AllBillsFragment extends Fragment {
 //                    //getActivity().getSupportFragmentManager().popBackStackImmediate() ;
 //
 ////                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-////                            new HomeFragment()).commit();
+////                            new BillmanFragment()).commit();
 //                    return true;
 //                }
 //                return false;

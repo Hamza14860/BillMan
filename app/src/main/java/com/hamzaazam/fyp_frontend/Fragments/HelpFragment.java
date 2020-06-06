@@ -25,6 +25,11 @@ public class HelpFragment extends Fragment {
     TextView helpOcrDetails;
     int helpOcrControl;
 
+
+    TextView helpBillMan;
+    TextView helpBillManDetails;
+    int helpBillManControl;
+
     public HelpFragment() {
         // Required empty public constructor
     }
@@ -46,7 +51,9 @@ public class HelpFragment extends Fragment {
         helpOcrDetails = view.findViewById(R.id.helpOcrDetails);
         helpOcrControl = 0;
 
-
+        helpBillMan= view.findViewById(R.id.helpBillMan);
+        helpBillManDetails = view.findViewById(R.id.helpBillManDetails);
+        helpBillManControl = 0;
 
         helpRequestAddCat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +80,21 @@ public class HelpFragment extends Fragment {
                 }
             }
         });
+
+
+        helpBillMan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(helpBillManControl == 0){
+                    helpBillManControl = 1;
+                    helpBillManDetails.setVisibility(View.VISIBLE);
+                }else if(helpBillManControl == 1){
+                    helpBillManControl = 0;
+                    helpBillManDetails.setVisibility(View.GONE);
+                }
+            }
+        });
+
 
 
         return view;

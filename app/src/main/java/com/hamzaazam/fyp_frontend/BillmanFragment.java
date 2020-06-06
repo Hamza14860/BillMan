@@ -43,7 +43,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HomeFragment extends Fragment {
+public class BillmanFragment extends Fragment {
 
     //OCR BILL CATEOGIRES
     RecyclerView recyclerViewCategoires;

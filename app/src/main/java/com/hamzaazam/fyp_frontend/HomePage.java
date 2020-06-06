@@ -29,6 +29,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hamzaazam.fyp_frontend.Fragments.HelpFragment;
 import com.hamzaazam.fyp_frontend.Fragments.ExpensesFragment;
+import com.hamzaazam.fyp_frontend.Fragments.HomehFragment;
 import com.hamzaazam.fyp_frontend.Fragments.ProfileFragment;
 
 import java.util.HashMap;
@@ -74,7 +75,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
         toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(" Bill Management");
+        getSupportActionBar().setTitle(" Home");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawer = findViewById(R.id.drawer_layout);
         navigationView.setNavigationItemSelectedListener(this);//to keep code clear we passed this, and implemented the method
@@ -86,8 +87,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new HomeFragment()).addToBackStack(null).commit();
-            navigationView.setCheckedItem(R.id.nav_home);
+                    new HomehFragment()).addToBackStack(null).commit();
+            navigationView.setCheckedItem(R.id.nav_homehome);
         }
 
         //Account settings button
@@ -114,10 +115,15 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             public void run() {
                 // update the main content by replacing fragments
                 switch (item.getItemId()) {
+                    case R.id.nav_homehome:
+                        getSupportActionBar().setTitle(" Home ");
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                new HomehFragment()).addToBackStack(null).commit();
+                        break;
                     case R.id.nav_home:
                         getSupportActionBar().setTitle(" Bill Management ");
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                new HomeFragment()).addToBackStack(null).commit();
+                                new BillmanFragment()).addToBackStack(null).commit();
                         break;
 //                    case R.id.nav_players:
 //                        getSupportActionBar().setTitle(" OCR Receipts ");
@@ -221,7 +227,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             getSupportActionBar().setTitle(" Home ");
             navigationView.setCheckedItem(R.id.nav_home);
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new HomeFragment()).commit();
+                    new BillmanFragment()).commit();
         }else {
             super.onBackPressed();
         }

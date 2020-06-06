@@ -88,7 +88,37 @@
         \nIn our case we apply AI and Machine Learning techniques to extract Text from Bills and Receipt."
         android:visibility="gone"
         />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="15dp"
+        android:layout_marginHorizontal="35dp"
+        />
 
+    <TextView
+        android:id="@+id/helpBillMan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/darkgrey_gn"
+        android:text="What is Bill Management?"
+        android:textSize="14dp"
+        android:padding="15dp"
+        android:drawableRight="@drawable/drop_down_arrow"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="3dp"
+        />
+    <TextView
+        android:id="@+id/helpBillManDetails"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textSize="14dp"
+        android:padding="15dp"
+        android:layout_marginLeft="25dp"
+        android:text="Bill Management allows you to Scan, Store, Manage, Analyze your bills.
+        \nUsing our AI Software, you can scan certain bill images and extract text out from them."
+        android:visibility="gone"
+        />
 
 
 </LinearLayout>

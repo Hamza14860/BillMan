@@ -92,6 +92,9 @@ public class ExpenseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             else if (expense.getExpenseCategory().equals("Grocery")){
                 ((ExpenseViewHolder) holder).expenseCategory.setBackgroundColor(mContext.getResources().getColor(R.color.dkyellow));
             }
+            else {
+                ((ExpenseViewHolder) holder).expenseCategory.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimaryDark));
+            }
 
 
 

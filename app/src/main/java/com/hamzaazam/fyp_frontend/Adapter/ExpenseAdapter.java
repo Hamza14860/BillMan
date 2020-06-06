@@ -3,6 +3,8 @@ package com.hamzaazam.fyp_frontend.Adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,6 +82,18 @@ public class ExpenseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ((ExpenseViewHolder) holder).expenseCategory.setText(expense.getExpenseCategory());
             ((ExpenseViewHolder) holder).expenseDate.setText(expense.getExpenseDate());
             ((ExpenseViewHolder) holder).expenseAmount.setText(expense.getExpenseAmount());
+
+            if (expense.getExpenseCategory().equals("Food")){
+                ((ExpenseViewHolder) holder).expenseCategory.setBackgroundColor(mContext.getResources().getColor(R.color.dkgreen));
+            }
+            else if (expense.getExpenseCategory().equals("Shopping")){
+                ((ExpenseViewHolder) holder).expenseCategory.setBackgroundColor(mContext.getResources().getColor(R.color.lightred));
+            }
+            else if (expense.getExpenseCategory().equals("Grocery")){
+                ((ExpenseViewHolder) holder).expenseCategory.setBackgroundColor(mContext.getResources().getColor(R.color.dkyellow));
+            }
+
+
 
             ((ExpenseViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

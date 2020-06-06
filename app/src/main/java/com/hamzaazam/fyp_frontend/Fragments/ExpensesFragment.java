@@ -66,7 +66,7 @@ public class ExpensesFragment extends Fragment {
 
     DatePicker dpExpense;
     EditText totalExpense;
-    public static final String[] MONTHS = {"January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "Novembe", "December"};
+    public static final String[] MONTHS = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "Novembe", "December"};
 
     public ExpensesFragment() {
         // Required empty public constructor

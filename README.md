@@ -15,3 +15,5 @@ HOW TO USE THE APP:
  4) Run the project on an Android Emulator or on your Android phone (min version - v6)
  5) To use the functionality of OCR, you will need to either use the direct Receipt OCR, or if you want to customize your own OCR for 
   a particular bill image, then contact the dev team at i160163@nu.edu.pk, i160096@nu.edu.pk, i160257@nu.edu.pk. 
+  
+  iOS App Link: https://github.com/Hamza14860/SmartBillManager_iOS

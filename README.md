@@ -1,5 +1,6 @@
 # BillMan
 Technologies Used: [Android App, Flask Server (Image Recognition, Image Processing, OCR)]
+
 Smart Bill Manager is a solution to digitize the process of traditional bill management by providing an automated solution to scan, extract, store and manage bills.
 
 This repository is the Front-End Android Application for Smart Bill Manager.
